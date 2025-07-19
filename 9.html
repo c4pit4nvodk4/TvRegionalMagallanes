@@ -29,7 +29,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 3fr);
       gap: 15px;
       max-width: 1200px;
       margin: 0 auto;
@@ -46,13 +46,13 @@
     /* Media Queries para adaptar a tabletas y móviles */
     @media (max-width: 992px) {
       .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 3fr);
       }
     }
 
     @media (max-width: 600px) {
       .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 3fr;
       }
     }
   </style>
