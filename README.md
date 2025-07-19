@@ -7,7 +7,7 @@
 
 ¿Quieres ver los canales de TV publica de Magallanes y la Antartida Chilena?:
 
-<a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/" target="_blank">¡HAZ CLIC AQUÍ!</a>
+<a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/" target="_blank"><b>¡HAZ CLIC AQUÍ!</b></a>
 
 <b>Funcionamiento Básico</b>
 
