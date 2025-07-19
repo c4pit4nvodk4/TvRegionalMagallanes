@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -29,7 +28,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 3fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 15px;
       max-width: 1200px;
       margin: 0 auto;
@@ -37,22 +36,15 @@
 
     video {
       width: 100%;
-      height: auto;
+      aspect-ratio: 16 / 9;
       border: 2px solid white;
       background: black;
       cursor: pointer;
     }
 
-    /* Media Queries para adaptar a tabletas y móviles */
-    @media (max-width: 992px) {
-      .grid {
-        grid-template-columns: repeat(3, 3fr);
-      }
-    }
-
     @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: 3fr;
+      video {
+        aspect-ratio: 4 / 3;
       }
     }
   </style>
@@ -64,7 +56,6 @@
   </div>
 
   <div class="grid">
-    <!-- Los videos se generan dinámicamente por JavaScript -->
     <video id="video0" muted autoplay playsinline></video>
     <video id="video1" muted autoplay playsinline></video>
     <video id="video2" muted autoplay playsinline></video>
@@ -74,6 +65,10 @@
     <video id="video6" muted autoplay playsinline></video>
     <video id="video7" muted autoplay playsinline></video>
     <video id="video8" muted autoplay playsinline></video>
+  </div>
+
+  <div style="margin-top: 40px; text-align: center; font-size: 12px; color: gray;">
+    Eres el visitante número: <span id="visitor-count">1</span>
   </div>
 
   <script>
@@ -109,31 +104,17 @@
         video.muted = false;
       });
     });
-	
-  </script>
 
-</body>
-  <div style="margin-top: 40px; text-align: center; font-size: 12px; color: gray;">
-    Eres el visitante número: <span id="visitor-count">1</span>
-  </div>
-
-  <script>
-    // Obtener el contador actual del almacenamiento local
+    // Contador de visitantes local
     let count = localStorage.getItem('visitCount');
-
-    // Si no existe, inicialízalo en 1
     if (!count) {
       count = 1;
     } else {
-      // Incrementar el contador
       count = parseInt(count) + 1;
     }
-
-    // Guardar el nuevo valor
     localStorage.setItem('visitCount', count);
-
-    // Mostrar el número en la página
     document.getElementById('visitor-count').textContent = count;
   </script>
 
+</body>
 </html>
