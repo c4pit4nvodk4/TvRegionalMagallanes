@@ -37,19 +37,32 @@
       border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
-      margin-top: 20px;
+      margin: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
       transition: background-color 0.3s;
     }
 
     .boton-descarga:hover {
-      background-color: #32c973;
+      opacity: 0.9;
     }
 
     .boton-descarga img {
       width: 24px;
       height: 24px;
       margin-right: 10px;
+    }
+
+    .botones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    @media (min-width: 600px) {
+      .botones {
+        flex-direction: row;
+      }
     }
   </style>
 </head>
@@ -58,11 +71,26 @@
   <!-- Imagen de portada -->
   <img class="portada" src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png" alt="Portada TV Regional Magallanes" />
 
-  <!-- Botón de descarga -->
-  <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/TvRegionalMagallanes.apk" download>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android" />
-    Descargar TV Regional Magallanes para Android
-  </a>
+  <!-- Botones de descarga -->
+  <div class="botones">
+    <!-- Botón Android -->
+    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/TvRegionalMagallanes.apk" download>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android" />
+      Descargar para Android
+    </a>
+
+    <!-- Botón Windows -->
+    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2021.svg" alt="Windows" />
+      Descargar para Windows
+    </a>
+
+    <!-- Botón iOS -->
+    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="iOS" />
+      Descargar para iOS
+    </a>
+  </div>
 
 </body>
 </html>
