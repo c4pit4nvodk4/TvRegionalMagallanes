@@ -20,7 +20,7 @@ Funciona Perfectamente para PC, dispositivos Android y dispositivos Apple.
 <b>Dentro del HTML también esta el botón "9"</b>
 
 <p align="Left">
-  <img src="[https://c4pit4nvodk4.github.io/TvRegionalMagallanes/MENU/PORTADA.png](https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png)" alt="BOTON 9" width="250"/>
+  <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="BOTON 9" width="250"/>
 </p>
 
 El cual abre una sección para ver 9 canales Distintos, estos 9 canales fueron seleccionados por tener en su tanda de programas, una sección de noticias.
