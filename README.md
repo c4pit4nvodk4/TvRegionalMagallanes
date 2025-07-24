@@ -14,7 +14,7 @@ simplemente es seleccionar el canal a escuchar, y se abrirá una ventana con el 
 Programa Creado %100 en HTML, para que pueda ser accesible en diferentes dispositivos electrónicos.
 Funciona Perfectamente para PC, dispositivos Android y dispositivos Apple.
 
-<b>Dentro del HTML también esta el botón "9"</b>
+<b>Dentro del HTML también esta el botón "9 Noticias"</b>
 
 <p align="Left">
   <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="BOTON 9" width="250"/>
@@ -24,6 +24,14 @@ El cual abre una sección para ver 9 canales Distintos, estos 9 canales fueron s
 Con ello mediante estos 9 canales nos podemos informar de manera mas invasiva por si ocurren desastres naturales.
 Al ser 9 videos a la vez, todos las transmisiones en vivo estarán sin sonido, para activarlo, solo haz clic en el que deseas escuchar, ademas automáticamente
 se cancelara el sonido de las demás transmisiones, dejando solo el seleccionado.
+
+*NUEVO*
+
+ahora tenems el nuevo 9 Musical!
+
+<b>Dentro del HTML también esta el botón "9 MUSICAL"</b>
+
+con canales dedicados al entretenimiento musical
 
 Muchas Gracias, espero que lo disfruten :D
 
