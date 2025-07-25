@@ -87,13 +87,27 @@
       font-size: 24px;
       color: #333;
     }
+
+    /* Agrandar botones del reproductor video.js */
+.video-js .vjs-control {
+  font-size: 30px; /* Tamaño de los íconos */
+}
+
+.video-js .vjs-button > .vjs-icon-placeholder {
+  font-size: 20px; /* Tamaño individual de íconos */
+}
+
+.video-js .vjs-control-bar {
+  height: 55px !important; /* Alto total de la barra de controles */
+}
+
   </style>
 </head>
 <body>
 
   <!-- LOGO PORTADA -->
   <div class="logo-container">
-    <img src="MENU/PORTADA.png" alt="Logo" class="logo">
+    <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/MENU/PORTADA.png" alt="Logo" class="logo">
   </div>
 
   <!-- Reproductor Video -->
@@ -243,34 +257,49 @@
 
   <!-- Scripts -->
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-  <script>
-    const player = videojs('mi-reproductor');
-    const videoContainer = document.getElementById('reproductor-container');
-    const audioContainer = document.getElementById('reproductor-audio-container');
-    const audioPlayer = document.getElementById('mi-audio');
+<script>
+  const player = videojs('mi-reproductor');
+  const videoContainer = document.getElementById('reproductor-container');
+  const audioContainer = document.getElementById('reproductor-audio-container');
+  const audioPlayer = document.getElementById('mi-audio');
 
-    function abrirReproductor(url) {
-      const esVideo = url.includes('.m3u8');
+  function abrirReproductor(url) {
+    const esVideo = url.includes('.m3u8');
 
-      // Ocultar ambos
-      videoContainer.style.display = 'none';
-      audioContainer.style.display = 'none';
-      player.pause();
-      player.src('');
-      audioPlayer.pause();
-      audioPlayer.src = '';
+    // Ocultar ambos
+    videoContainer.style.display = 'none';
+    audioContainer.style.display = 'none';
+    player.pause();
+    player.src('');
+    audioPlayer.pause();
+    audioPlayer.src = '';
 
-      if (esVideo) {
-        videoContainer.style.display = 'block';
-        player.src({ src: url, type: 'application/x-mpegURL' });
-        player.play();
-      } else {
-        audioContainer.style.display = 'block';
-        audioPlayer.src = url;
-        audioPlayer.play();
-      }
+    if (esVideo) {
+      videoContainer.style.display = 'block';
+      player.muted(false); // Activar sonido
+      player.src({ src: url, type: 'application/x-mpegURL' });
+
+      player.play().then(() => {
+        const videoElement = document.getElementById('mi-reproductor');
+        if (videoElement.requestFullscreen) {
+          videoElement.requestFullscreen();
+        } else if (videoElement.webkitRequestFullscreen) {
+          videoElement.webkitRequestFullscreen();
+        } else if (videoElement.mozRequestFullScreen) {
+          videoElement.mozRequestFullScreen();
+        } else if (videoElement.msRequestFullscreen) {
+          videoElement.msRequestFullscreen();
+        }
+      }).catch((e) => {
+        console.error("Autoplay o pantalla completa falló:", e);
+      });
+    } else {
+      audioContainer.style.display = 'block';
+      audioPlayer.src = url;
+      audioPlayer.play();
     }
-  </script>
+  }
+</script>
 </body>
 
 <script type="text/javascript" src="https://contador.websiteout.com/js/7/0/0/0"></script>
