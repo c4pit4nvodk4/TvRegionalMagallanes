@@ -5,7 +5,9 @@
   <title>TV Regional Magallanes</title>
   <link href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/ICON.png" rel="icon" />
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-	
+  <!-- Google Cast SDK -->
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+  
   <style>
     /* Estilos generales */
     body {
@@ -69,6 +71,7 @@
       background: white;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      position: relative;
     }
     #mi-reproductor {
       width: 100%;
@@ -95,6 +98,25 @@
     .video-js .vjs-control-bar {
       height: 55px !important;
     }
+    
+    /* Botón de casting */
+    .cast-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 
@@ -106,12 +128,14 @@
 
   <!-- REPRODUCTORES -->
   <div id="reproductor-container">
-    <video id="mi-reproductor" class="video-js vjs-default-skin" controls autoplay muted preload="auto">
+    <button id="cast-video-button" class="cast-button" title="Transmitir a TV">📺</button>
+    <video id="mi-reproductor" class="video-js vjs-default-skin" controls autoplay preload="auto">
       <source src="" type="application/x-mpegURL" />
     </video>
   </div>
 
   <div id="reproductor-audio-container">
+    <button id="cast-audio-button" class="cast-button" title="Transmitir a TV">📺</button>
     <audio id="mi-audio" controls autoplay>
       <source src="" type="audio/mpeg" />
       Tu navegador no soporta la reproducción de audio.
@@ -152,7 +176,8 @@
     <a onclick="abrirReproductor('https://stmv5.voxtvhd.com.br/opinionsur/opinionsur/playlist.m3u8?PlaylistM3UCL')">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/OPINIONSURTV.png" alt="Opinion Sur">
     </a>
-    <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Noticias.html" target="_blank">
+    <!-- Enlaces .html modificados para abrir en misma ventana -->
+    <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Noticias.html" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="9">
     </a>
     <a onclick="abrirReproductor('https://tls-cl.cdnz.cl/umag1/ngrp:live_all/playlist.m3u8')">
@@ -194,7 +219,8 @@
     <a href="https://www.instagram.com/tvregionalmagallanes/" target="_blank">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/RRSSTV.png" alt="Redes Sociales">
     </a>
-    <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Musica.html" target="_blank">
+    <!-- Enlaces .html modificados para abrir en misma ventana -->
+    <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Musica.html" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="9">
     </a>
     <a href="https://live.tvcontrolcp.com:8081/radiozona/index.m3u8" target="_blank">
@@ -211,37 +237,38 @@
   </div>
   
   <div class="grid">
-    <a href="https://mdstrm.com/live-stream-playlist/5346f5f2c1e6f5810b5b9df0.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/5346f5f2c1e6f5810b5b9df0.m3u8?PlaylistM3UCL')">        
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/TVN.png" alt="TVN">
     </a>
-    <a href="https://m3u.cl/channel/c13.php?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://m3u.cl/channel/c13.php?PlaylistM3UCL.m3u8?PlaylistM3UCL')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/CANAL13.png" alt="Canal 13">
     </a>
-    <a href="https://mdstrm.com/live-stream-playlist/6491ced935a5833c47dd7f41.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/6491ced935a5833c47dd7f41.m3u8?PlaylistM3UCL')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/CHV.png" alt="CHV">
     </a>
-    <a href="https://mdstrm.com/live-stream-playlist/561430ae330428c223687e1e.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/mega/mega.smil/playlist.m3u8?PlaylistM3UCL')">                
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/MEGA.png" alt="MEGA">
     </a>
-    <a href="https://unlimited2-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://unlimited2-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8?PlaylistM3UCL')">    
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/UCV.png" alt="UCV">
     </a>
-    <a href="https://janus-tv-ply.senado.cl/playlist/playlist.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://janus-tv-ply.senado.cl/playlist/playlist.m3u8?PlaylistM3UCL')">        
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/SENADO.png" alt="TV SENADO">
     </a>
-    <a href="https://rudo.video/rudo.m3u8" target="_blank">
+    <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/tvmas/tvmas.smil/playlist.m3u8?PlaylistM3UCL')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/TVMAS.png" alt="TV +">
     </a>
-    <a href="https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/bbtv/bbtv.smil/playlist.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/bbtv/bbtv.smil/playlist.m3u8?PlaylistM3UCL')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/BIOBIOTV.png" alt="BIO BIO TV">
     </a>
-    <a href="https://alba-cl-lared-lared.stream.mediatiquestream.com/index.m3u8?PlaylistM3UCL" target="_blank">
+    <a onclick="abrirReproductor('https://alba-cl-lared-lared.stream.mediatiquestream.com/index.m3u8?PlaylistM3UCL')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LARED.png" alt="LA RED">
     </a>
-    <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9NACIONAL.html" target="_blank">
+    <!-- Enlace .html modificado para abrir en misma ventana -->
+    <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9NACIONAL.html" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9NACIONAL.png" alt="9 Nacional">
     </a>
-        <a href="https://www.instagram.com/tvregionalmagallanes/" target="_blank">
+    <a href="https://www.instagram.com/tvregionalmagallanes/" target="_blank">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/RRSSTV.png" alt="Redes Sociales">
     </a>
   </div>
@@ -295,13 +322,91 @@
   <!-- SCRIPTS -->
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
   <script>
+    // Inicializar reproductores
     const player = videojs('mi-reproductor');
     const videoContainer = document.getElementById('reproductor-container');
     const audioContainer = document.getElementById('reproductor-audio-container');
     const audioPlayer = document.getElementById('mi-audio');
+    
+    // Variables para casting
+    let castContext = null;
+    let currentSession = null;
+    let currentMediaUrl = '';
+    let isCasting = false;
 
+    // Inicializar API de Google Cast
+    function initializeCastApi() {
+      cast.framework.CastContext.getInstance().setOptions({
+        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+      });
+      
+      castContext = cast.framework.CastContext.getInstance();
+      castContext.addEventListener(
+        cast.framework.CastContextEvent.SESSION_STATE_CHANGED,
+        onSessionStateChanged
+      );
+    }
+    
+    // Manejar cambios de estado de la sesión
+    function onSessionStateChanged(event) {
+      switch(event.sessionState) {
+        case cast.framework.SessionState.SESSION_STARTED:
+          isCasting = true;
+          sendMediaToChromecast(currentMediaUrl);
+          break;
+        case cast.framework.SessionState.SESSION_ENDED:
+          isCasting = false;
+          break;
+      }
+    }
+    
+    // Enviar contenido a Chromecast
+    function sendMediaToChromecast(url) {
+      if (!currentSession || !url) return;
+      
+      const mediaInfo = new chrome.cast.media.MediaInfo(url);
+      mediaInfo.contentType = url.includes('.m3u8') ? 
+        'application/vnd.apple.mpegurl' : 'audio/mpeg';
+      
+      const request = new chrome.cast.media.LoadRequest(mediaInfo);
+      request.autoplay = true;
+      
+      currentSession.loadMedia(request).then(
+        () => console.log('Media loaded successfully'),
+        (error) => console.error('Error loading media:', error)
+      );
+    }
+    
+    // Manejar clic en botón de casting
+    document.getElementById('cast-video-button').addEventListener('click', toggleCasting);
+    document.getElementById('cast-audio-button').addEventListener('click', toggleCasting);
+    
+    function toggleCasting() {
+      if (!castContext) {
+        console.error('Cast API no inicializada');
+        return;
+      }
+      
+      if (isCasting) {
+        castContext.endCurrentSession(true);
+        isCasting = false;
+      } else {
+        currentSession = castContext.getCurrentSession();
+        if (!currentSession) {
+          castContext.requestSession().then(session => {
+            currentSession = session;
+          }).catch(error => {
+            console.error('Error requesting session:', error);
+          });
+        }
+      }
+    }
+    
+    // Función para abrir reproductor
     function abrirReproductor(url) {
       const esVideo = url.includes('.m3u8');
+      currentMediaUrl = url; // Guardar URL para casting
 
       // Ocultar reproductores
       videoContainer.style.display = 'none';
@@ -316,16 +421,21 @@
         player.muted(false);
         player.src({ src: url, type: 'application/x-mpegURL' });
 
+        // Reproducir y entrar en pantalla completa
         player.play().then(() => {
           const videoElement = document.getElementById('mi-reproductor');
-          if (videoElement.requestFullscreen) {
-            videoElement.requestFullscreen();
-          } else if (videoElement.webkitRequestFullscreen) {
-            videoElement.webkitRequestFullscreen();
-          } else if (videoElement.mozRequestFullScreen) {
-            videoElement.mozRequestFullScreen();
-          } else if (videoElement.msRequestFullscreen) {
-            videoElement.msRequestFullscreen();
+          try {
+            if (videoElement.requestFullscreen) {
+              videoElement.requestFullscreen();
+            } else if (videoElement.webkitRequestFullscreen) {
+              videoElement.webkitRequestFullscreen();
+            } else if (videoElement.mozRequestFullScreen) {
+              videoElement.mozRequestFullScreen();
+            } else if (videoElement.msRequestFullscreen) {
+              videoElement.msRequestFullscreen();
+            }
+          } catch (e) {
+            console.error("Error al entrar en pantalla completa:", e);
           }
         }).catch((e) => {
           console.error("Error al reproducir:", e);
@@ -336,6 +446,13 @@
         audioPlayer.play();
       }
     }
+    
+    // Inicializar Cast API cuando esté lista
+    window['__onGCastApiAvailable'] = function(isAvailable) {
+      if (isAvailable) {
+        initializeCastApi();
+      }
+    };
   </script>
   
   <script type="text/javascript" src="https://contador.websiteout.com/js/7/0/0/0"></script>
