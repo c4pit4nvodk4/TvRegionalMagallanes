@@ -128,14 +128,14 @@
 
   <!-- REPRODUCTORES -->
   <div id="reproductor-container">
-    <button id="cast-video-button" class="cast-button" title="Transmitir a TV">📺</button>
+    <button id="cast-video-button" class="cast-button" title="Transmitir a TV"><img src="https://cdn.freebiesupply.com/logos/large/2x/cast-icon-chromecast-logo-black-and-white.png" alt="Casting" class="logo"></button>
     <video id="mi-reproductor" class="video-js vjs-default-skin" controls autoplay preload="auto">
       <source src="" type="application/x-mpegURL" />
     </video>
   </div>
 
   <div id="reproductor-audio-container">
-    <button id="cast-audio-button" class="cast-button" title="Transmitir a TV">📺</button>
+    <button id="cast-audio-button" class="cast-button" title="Transmitir a TV"><img src="https://cdn.freebiesupply.com/logos/large/2x/cast-icon-chromecast-logo-black-and-white.png" alt="Casting" class="logo"></button>
     <audio id="mi-audio" controls autoplay>
       <source src="" type="audio/mpeg" />
       Tu navegador no soporta la reproducción de audio.
@@ -216,17 +216,17 @@
     <a onclick="abrirReproductor('https://5f700d5b2c46f.streamlock.net:443/airelibrefm/airelibrefm/playlist.m3u8')">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/AIRELIBREFM.png" alt="Aire Libre FM">
     </a>
-    <a href="https://www.instagram.com/tvregionalmagallanes/" target="_blank">
+    <a href="https://www.instagram.com/tvregionalmagallanes/" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/RRSSTV.png" alt="Redes Sociales">
     </a>
     <!-- Enlaces .html modificados para abrir en misma ventana -->
     <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Musica.html" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="9">
     </a>
-    <a href="https://live.tvcontrolcp.com:8081/radiozona/index.m3u8" target="_blank">
+    <a onclick="abrirReproductor('https://live.tvcontrolcp.com:8081/radiozona/index.m3u8')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/ZONA90.png" alt="Radio Zona 90">
     </a>
-    <a href="https://tv.arkeo.cl:1936/tvbajocero/tvbajocero/playlist.m3u8" target="_blank">
+    <a onclick="abrirReproductor('https://tv.arkeo.cl:1936/tvbajocero/tvbajocero/playlist.m3u8')">            
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/BAJOCEROMULTIMEDIA.png" alt="Bajo Cero Multimedia">
     </a>
   </div>
@@ -268,7 +268,7 @@
     <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9NACIONAL.html" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9NACIONAL.png" alt="9 Nacional">
     </a>
-    <a href="https://www.instagram.com/tvregionalmagallanes/" target="_blank">
+    <a href="https://www.instagram.com/tvregionalmagallanes/" onclick="return True">
       <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/RRSSTV.png" alt="Redes Sociales">
     </a>
   </div>
