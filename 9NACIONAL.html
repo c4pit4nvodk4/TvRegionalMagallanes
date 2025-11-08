@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/ICON.png" rel="icon" />
-  <title>TV Regional Magallanes - Multiview Noticias</title>
+  <link href="LOGOS/ICON.png" rel="icon" />
+  <title>TV Regional Magallanes - Multiview Musical</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     body {
@@ -47,12 +47,53 @@
         aspect-ratio: 4 / 3;
       }
     }
+
+    /* 🔵 Botón flotante inferior derecho */
+    .home-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #00aaff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      z-index: 1000;
+    }
+
+    .home-button:hover {
+      transform: scale(1.1);
+    }
+
+    .home-button img {
+      width: 30px;
+      height: 30px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* 🔗 Estilo del enlace de donaciones */
+    .donaciones {
+      display: block;
+      margin-top: 40px;
+      font-size: 18px;
+      color: #00aaff;
+      text-decoration: underline;
+    }
+
+    .donaciones:hover {
+      color: #33ccff;
+    }
   </style>
 </head>
 <body>
 
   <div class="logo-container">
-    <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/MENU/PORTADA.png" alt="Logo" class="main-image">
+    <img src="MENU/PORTADA.png" alt="Logo" class="main-image">
   </div>
 
   <div class="grid">
@@ -66,6 +107,14 @@
     <video id="video7" muted autoplay playsinline></video>
     <video id="video8" muted autoplay playsinline></video>
   </div>
+
+  <!-- 🔵 Botón de inicio -->
+  <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/" class="home-button" title="Ir al inicio">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Inicio">
+  </a>
+
+  <!-- 🔗 Enlace de Donaciones -->
+  <a href="https://mpago.la/1k4qsoo" target="_blank" class="donaciones">Donaciones, Ayúdanos a Crecer</a>
 
   <script>
     const streams = [
@@ -100,9 +149,8 @@
         video.muted = false;
       });
     });
-
-    
   </script>
-<script type="text/javascript" src="https://contador.websiteout.com/js/7/0/0/0"></script>
+
+  <script type="text/javascript" src="https://contador.websiteout.com/js/7/0/0/0"></script>
 </body>
 </html>
