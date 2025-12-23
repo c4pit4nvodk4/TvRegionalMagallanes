@@ -1,40 +1,97 @@
-<p align="Left">
+# 📺 TV Regional Magallanes
+
+<p align="left">
   <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/MENU/PORTADA.png" alt="TV Regional Magallanes" width="500"/>
 </p>
 
-¿Quieres ver los canales de TV publica de Magallanes y la Antartida Chilena?:
-<a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/" target="_blank"><b>¡HAZ CLIC AQUÍ!</b></a>
+![HTML](https://img.shields.io/badge/HTML-100%25-orange)
+![Open Source](https://img.shields.io/badge/Open%20Source-Free-blue)
+![Multi Device](https://img.shields.io/badge/Compatible-PC%20%7C%20Android%20%7C%20iOS-green)
+![Streaming](https://img.shields.io/badge/Streaming-TV%20y%20Radio-red)
 
-<b>Funcionamiento Básico</b>
+## 🌎 ¿Qué es TV Regional Magallanes?
 
-Su funcionamiento, es simple, deslizando hacia abajo, esta n todos los canales en botones cuadrados, todo esta segmentado en 2 secciones, Canales de Video y Canales de radio,
-simplemente es seleccionar el canal a escuchar, y se abrirá una ventana con el reproductor y el canal seleccionado, para cambiar de canal, solo hace falta hacer clic en otro canal.
-<b>MENU</b>
+**TV Regional Magallanes** es una plataforma web desarrollada **100% en HTML**, que permite acceder de forma simple y rápida a los **canales de televisión pública y radios** de la Región de **Magallanes y la Antártica Chilena**.
 
-Programa Creado %100 en HTML, para que pueda ser accesible en diferentes dispositivos electrónicos.
-Funciona Perfectamente para PC, dispositivos Android y dispositivos Apple.
+El proyecto está pensado para facilitar el acceso a la información, entretención y transmisiones en vivo desde cualquier dispositivo.
 
-<b>Dentro del HTML también esta el botón "9 Noticias"</b>
+👉 **Accede aquí al proyecto:**  
+🔗 https://c4pit4nvodk4.github.io/TvRegionalMagallanes/
 
-<p align="Left">
-  <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="BOTON 9" width="250"/>
+---
+
+## 🚀 Funcionamiento básico
+
+El uso de la plataforma es muy sencillo:
+
+- Desliza hacia abajo para ver todos los canales disponibles
+- Los canales están organizados en **botones cuadrados**
+- El contenido se divide en **dos secciones principales**:
+  - 📺 Canales de Video
+  - 📻 Canales de Radio
+- Al seleccionar un canal, se abrirá una ventana con el reproductor activo
+- Para cambiar de canal, solo debes hacer clic en otro botón
+
+---
+
+## 🧭 Menú y compatibilidad
+
+- Proyecto creado **100% en HTML**
+- Compatible con:
+  - 💻 PC
+  - 📱 Dispositivos Android
+  - 🍎 Dispositivos Apple (iOS)
+
+No requiere instalación ni aplicaciones externas.
+
+---
+
+## 📰 Función especial: 9 Noticias
+
+Dentro del HTML se incluye el botón **"9 Noticias"**, el cual habilita una vista especial:
+
+<p align="left">
+  <img src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/9.png" alt="Botón 9 Noticias" width="250"/>
 </p>
 
-El cual abre una sección para ver 9 canales Distintos, estos 9 canales fueron seleccionados por tener en su tanda de programas, una sección de noticias.
-Con ello mediante estos 9 canales nos podemos informar de manera mas invasiva por si ocurren desastres naturales.
-Al ser 9 videos a la vez, todos las transmisiones en vivo estarán sin sonido, para activarlo, solo haz clic en el que deseas escuchar, ademas automáticamente
-se cancelara el sonido de las demás transmisiones, dejando solo el seleccionado.
+### ¿Qué es 9 Noticias?
 
-*NUEVO*
+- Muestra **9 canales distintos en simultáneo**
+- Los canales fueron seleccionados por incluir **bloques informativos y noticieros**
+- Ideal para mantenerse informado ante:
+  - Emergencias
+  - Desastres naturales
+  - Contingencias regionales
 
-ahora tenems el nuevo 9 Musical!
+🔇 Todas las transmisiones se cargan **sin sonido**  
+🔊 Para activar el audio, solo haz clic en el canal deseado  
+🎧 Automáticamente se silenciarán los demás reproductores
 
-<b>Dentro del HTML también esta el botón "9 MUSICAL"</b>
+---
 
-con canales dedicados al entretenimiento musical
+## 🎵 Nuevo: 9 Musical
 
-Muchas Gracias, espero que lo disfruten :D
+🆕 Se incorpora la nueva sección **9 Musical**
 
-<p align="Center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Magallanes_y_la_Ant%C3%A1rtica_Chilena%2C_Chile.svg" alt="Bandera Magallanes" width="100"/>
+- Canales dedicados exclusivamente a la **música y entretención**
+- Pensado para acompañar el día a día con contenido musical continuo
+
+---
+
+## ❤️ Agradecimientos
+
+Muchas gracias por utilizar este proyecto.  
+Espero que lo disfrutes y te sea de utilidad 😄
+
+---
+
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Magallanes_y_la_Ant%C3%A1rtica_Chilena%2C_Chile.svg" alt="Bandera de Magallanes y la Antártica Chilena" width="100"/>
 </p>
+
+---
+
+## 📜 Licencia
+
+Este proyecto es **libre y de código abierto**.  
+Puedes clonarlo, modificarlo y adaptarlo según tus necesidades.
