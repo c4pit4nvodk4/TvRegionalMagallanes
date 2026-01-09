@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="LOGOS/ICON.png" rel="icon" />
   <title>TV Regional Magallanes - Multiview Musical</title>
+
+  <!-- HLS -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
   <style>
     body {
       margin: 0;
@@ -18,18 +21,17 @@
 
     .main-image {
       display: block;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 25px auto;
       width: 100%;
       max-width: 800px;
-      height: auto;
-      object-fit: cover;
       border: 4px solid white;
     }
 
+    /* GRID 3x3 FIJO */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -37,18 +39,27 @@
     video {
       width: 100%;
       aspect-ratio: 16 / 9;
-      border: 2px solid white;
       background: black;
+      border: 2px solid white;
       cursor: pointer;
     }
 
+    /* Ajustes móviles SIN romper 3x3 */
     @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .grid {
+        gap: 6px;
+      }
+
       video {
-        aspect-ratio: 4 / 3;
+        border-width: 1px;
       }
     }
 
-    /* 🔵 Botón flotante inferior derecho */
+    /* Botón flotante */
     .home-button {
       position: fixed;
       bottom: 20px;
@@ -60,7 +71,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
       cursor: pointer;
       transition: transform 0.2s ease;
       z-index: 1000;
@@ -73,13 +84,13 @@
     .home-button img {
       width: 30px;
       height: 30px;
-      filter: brightness(0) invert(1);
+      filter: invert(1);
     }
 
-    /* 🔗 Estilo del enlace de donaciones */
+    /* Donaciones */
     .donaciones {
       display: block;
-      margin-top: 40px;
+      margin: 35px 0 20px;
       font-size: 18px;
       color: #00aaff;
       text-decoration: underline;
@@ -92,10 +103,10 @@
 </head>
 <body>
 
-  <div class="logo-container">
-    <img src="MENU/PORTADA.png" alt="Logo" class="main-image">
-  </div>
+  <!-- Portada -->
+  <img src="MENU/PORTADA.png" alt="Portada" class="main-image">
 
+  <!-- Multiview -->
   <div class="grid">
     <video id="video0" muted autoplay playsinline></video>
     <video id="video1" muted autoplay playsinline></video>
@@ -108,25 +119,28 @@
     <video id="video8" muted autoplay playsinline></video>
   </div>
 
-  <!-- 🔵 Botón de inicio -->
+  <!-- Donaciones -->
+  <a href="https://link.mercadopago.cl/tvregionalmagallanes" target="_blank" class="donaciones">
+    Donaciones · Ayúdanos a Crecer
+  </a>
+
+  <!-- Botón Inicio -->
   <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/" class="home-button" title="Ir al inicio">
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Inicio">
   </a>
 
-  <!-- 🔗 Enlace de Donaciones -->
-  <a href="https://link.mercadopago.cl/tvregionalmagallanes" target="_blank" class="donaciones">Donaciones, Ayúdanos a Crecer</a>
-
+  <!-- Script Streams -->
   <script>
     const streams = [
-      "https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8", //El Pinguino Multimedia//
-      "https://live20.bozztv.com/akamaissh101/ssh101/radiomagallanes/playlist.m3u8", //Radio Magallanes//
-      "https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8", //Polar Comunicaciones//
-      "https://unlimited1-cl-isp.dps.live/itv/itv.smil/playlist.m3u8?PlaylistM3UCL", //ITV//
-      "https://tls-cl.cdnz.cl/radiosoberania/live/playlist.m3u8?PlaylistM3UCL", //Soberania//
-      "https://ibanez.servercl.com/hls/live.m3u8", //Presidente ivanez//
-      "https://tls-cl.cdnz.cl/umag1/ngrp:live_all/playlist.m3u8", //Umag TV//
-      "https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/surtv/surtv.smil/playlist.m3u8?did=", //SUR TV//
-      "https://video3.servidordevideo.net:3585/live/upbsfzhdlive.m3u8" //Milodon Comunicaciones//
+      "https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8",
+      "https://live20.bozztv.com/akamaissh101/ssh101/radiomagallanes/playlist.m3u8",
+      "https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8",
+      "https://unlimited1-cl-isp.dps.live/itv/itv.smil/playlist.m3u8?PlaylistM3UCL",
+      "https://tls-cl.cdnz.cl/radiosoberania/live/playlist.m3u8?PlaylistM3UCL",
+      "https://ibanez.servercl.com/hls/live.m3u8",
+      "https://tls-cl.cdnz.cl/umag1/ngrp:live_all/playlist.m3u8",
+      "https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/surtv/surtv.smil/playlist.m3u8?did=",
+      "https://video3.servidordevideo.net:3585/live/upbsfzhdlive.m3u8"
     ];
 
     const players = [];
@@ -135,7 +149,7 @@
       const video = document.getElementById(`video${index}`);
 
       if (Hls.isSupported()) {
-        const hls = new Hls();
+        const hls = new Hls({ lowLatencyMode: true });
         hls.loadSource(url);
         hls.attachMedia(video);
         players.push({ video, hls });
@@ -151,9 +165,8 @@
     });
   </script>
 
-  <script type="text/javascript" src="https://contador.websiteout.com/js/7/0/0/0"></script>
+  <!-- Contador -->
+  <script src="https://contador.websiteout.com/js/7/0/0/0"></script>
+
 </body>
 </html>
-
-
-
