@@ -78,6 +78,54 @@ video {
   height: 50px;
   background: rgba(255,255,255,0.3);
 }
+
+/* ===== LISTA DERECHA ===== */
+#channelList {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%) translateX(120%);
+  width: 280px;
+  max-height: 70%;
+  background: rgba(0,0,0,0.75);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+#channelList.show {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+}
+
+#channelItems {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: white;
+  opacity: 0.6;
+}
+
+.channel-item img {
+  height: 35px;
+}
+
+.channel-item.active {
+  background: rgba(255,255,255,0.15);
+  opacity: 1;
+}
+
+.channel-item span {
+  font-size: 14px;
+}
+</style>
 </style>
 </head>
 
