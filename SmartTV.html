@@ -2,80 +2,104 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TV Regional Magallanes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV Regional Magallanes</title>
+<link rel="icon" href="LOGOS/ICON.png">
+
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: black;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+html,body{
+  margin:0;
+  padding:0;
+  background:black;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
-video {
-  width: 100%;
-  height: 100%;
-  background: black;
+#player{
+  width:100%;
+  height:100%;
+  background:black;
 }
 
-#overlay {
-  position: absolute;
-  bottom: 8%;
-  left: 5%;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: rgba(0,0,0,0.75);
-  padding: 14px 20px;
-  border-radius: 14px;
-  opacity: 0;
-  transition: opacity 0.3s;
+video, audio{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:black;
 }
 
-#overlay img {
-  height: 64px;
+.osd-bottom{
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(0,0,0,.65);
+  padding:10px 14px;
+  border-radius:10px;
+  opacity:0;
+  transition:.5s;
 }
 
-#overlay .info {
-  color: white;
+.osd-bottom img{
+  width:50px;
+  height:50px;
+  object-fit:contain;
 }
 
-#overlay .num {
-  font-size: 26px;
-  font-weight: bold;
+.osd-text{
+  color:white;
 }
 
-#overlay .name {
-  font-size: 18px;
+.osd-text strong{
+  font-size:18px;
 }
 
-.show { opacity: 1; }
+.osd-top{
+  position:absolute;
+  top:20px;
+  left:20px;
+  opacity:0;
+  transition:.5s;
+}
+
+.osd-top img{
+  width:70px;
+}
+
+.show{
+  opacity:1;
+}
 </style>
 </head>
 
 <body>
 
-<video id="player" autoplay playsinline></video>
+<div id="player">
+  <video id="video" autoplay playsinline></video>
+  <audio id="audio"></audio>
 
-<div id="overlay">
-  <img id="logo">
-  <div class="info">
-    <div class="num" id="canalNum"></div>
-    <div class="name" id="canalName"></div>
+  <div class="osd-top" id="osdTop">
+    <img src="LOGOS/ICON.png">
+  </div>
+
+  <div class="osd-bottom" id="osdBottom">
+    <img id="osdLogo">
+    <div class="osd-text">
+      <strong id="osdName"></strong><br>
+      Canal <span id="osdNumber"></span>
+    </div>
   </div>
 </div>
 
 <script>
 const canales = [
-  // CANAL 0
-  {n:0, nombre:"TV Regional Magallanes", tipo:"intro", url:"https://c4pit4nvodk4.github.io/TvRegionalMagallanes/Trailer.webm", logo:"https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png"},
-
-  // TV REGIONAL
+  {n:0, nombre:"TV Regional Magallanes", tipo:"intro", url:"https://c4pit4nvodk4.github.io/TvRegionalMagallanes/Trailer.webm", logo:"LOGOS/ICON.png"},
   {n:1,nombre:"Pingüino Multimedia",tipo:"video",url:"https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8",logo:"LOGOS/PINGUINOMULTIMEDIA.png"},
   {n:2,nombre:"Radio Magallanes TV",tipo:"video",url:"https://live20.bozztv.com/akamaissh101/ssh101/radiomagallanes/playlist.m3u8",logo:"LOGOS/RADIOMAGALLANES.png"},
   {n:3,nombre:"Polar Comunicaciones",tipo:"video",url:"https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8",logo:"LOGOS/POLARCOMUNICACIONES.png"},
@@ -109,7 +133,6 @@ const canales = [
   {n:31,nombre:"TV+",tipo:"video",url:"https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/tvmas/tvmas.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/458_TV_.png"},
   {n:32,nombre:"UCV TV",tipo:"video",url:"https://unlimited2-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/54_UCV.png"},
 
-  // RADIOS
   {n:50,nombre:"Radio Sur",tipo:"radio",url:"https://sonicpanel.cloudstreaming.eu/8078/stream",logo:"LOGOS/RadioSur.png"},
   {n:51,nombre:"Faraónica Natales",tipo:"radio",url:"https://179.9.164.55:1935/radio",logo:"LOGOS/FARAONICANATALES.png"},
   {n:52,nombre:"Radio Meridional",tipo:"radio",url:"https://sonic.nnw.cl/8028/stream",logo:"LOGOS/MERIDIONAL.png"},
@@ -123,62 +146,78 @@ const canales = [
   {n:60,nombre:"Carnaval FM",tipo:"radio",url:"https://sonando-us.digitalproserver.com/carnaval_antofagasta.aac",logo:"https://cdn.instant.audio/images/logos/emisora-cl/carnaval-vina.png"}
 ];
 
-let idx = 0;
+let index = 0;
 let hls;
-const player = document.getElementById("player");
+
+const video = document.getElementById("video");
+const audio = document.getElementById("audio");
+
+function mostrarOSD(c){
+  osdLogo.src = c.logo;
+  osdName.textContent = c.nombre;
+  osdNumber.textContent = c.n;
+  osdBottom.classList.add("show");
+  osdTop.classList.add("show");
+  setTimeout(()=>{
+    osdBottom.classList.remove("show");
+    osdTop.classList.remove("show");
+  },3000);
+}
 
 function cargarCanal(i){
-  if(i < 0) i = canales.length - 1;
-  if(i >= canales.length) i = 0;
-  idx = i;
-  const c = canales[idx];
-  mostrarOverlay(c);
+  if(i<0) i = canales.length-1;
+  if(i>=canales.length) i = 0;
+  index = i;
+  const c = canales[index];
 
-  if(hls){ hls.destroy(); hls = null; }
-  player.pause();
-  player.loop = (c.tipo === "intro");
+  video.pause();
+  audio.pause();
+  video.style.display="none";
+  audio.style.display="none";
 
-  if(c.tipo === "radio"){
-    player.src = c.url;
-  } else if(c.url.endsWith(".webm")){
-    player.src = c.url;
-  } else if(Hls.isSupported()){
-    hls = new Hls();
-    hls.loadSource(c.url);
-    hls.attachMedia(player);
-  } else {
-    player.src = c.url;
+  if(hls){ hls.destroy(); hls=null; }
+
+  if(c.tipo==="radio"){
+    audio.src = c.url;
+    audio.play();
+    audio.style.display="block";
+  }else{
+    video.style.display="block";
+    if(c.url.endsWith(".m3u8")){
+      if(Hls.isSupported()){
+        hls = new Hls();
+        hls.loadSource(c.url);
+        hls.attachMedia(video);
+      }else{
+        video.src = c.url;
+      }
+    }else{
+      video.src = c.url;
+    }
+    video.play();
   }
-  player.play();
+
+  mostrarOSD(c);
 }
 
-function mostrarOverlay(c){
-  logo.src = c.logo;
-  canalNum.innerText = "Canal " + c.n;
-  canalName.innerText = c.nombre;
-  overlay.classList.add("show");
-  setTimeout(()=>overlay.classList.remove("show"),3000);
-}
-
-/* CONTROLES */
-document.addEventListener("keydown", e=>{
-  if(e.key==="ArrowUp") cargarCanal(idx+1);
-  if(e.key==="ArrowDown") cargarCanal(idx-1);
-  if(e.key==="+") player.volume=Math.min(1,player.volume+0.1);
-  if(e.key==="-") player.volume=Math.max(0,player.volume-0.1);
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowUp") cargarCanal(index+1);
+  if(e.key==="ArrowDown") cargarCanal(index-1);
+  if(e.key==="+") video.volume = Math.min(1, video.volume+0.1);
+  if(e.key==="-" ) video.volume = Math.max(0, video.volume-0.1);
   if(!isNaN(e.key)){
-    const n=parseInt(e.key);
-    const c=canales.find(x=>x.n===n);
-    if(c) cargarCanal(canales.indexOf(c));
+    let num = parseInt(e.key);
+    let canal = canales.find(c=>c.n===num);
+    if(canal) cargarCanal(canales.indexOf(canal));
   }
 });
 
-let sy=0;
-document.addEventListener("touchstart",e=>sy=e.touches[0].clientY);
+let startY=0;
+document.addEventListener("touchstart",e=>startY=e.touches[0].clientY);
 document.addEventListener("touchend",e=>{
-  let ey=e.changedTouches[0].clientY;
-  if(sy-ey>50) cargarCanal(idx+1);
-  if(ey-sy>50) cargarCanal(idx-1);
+  let endY=e.changedTouches[0].clientY;
+  if(startY-endY>50) cargarCanal(index+1);
+  if(endY-startY>50) cargarCanal(index-1);
 });
 
 cargarCanal(0);
