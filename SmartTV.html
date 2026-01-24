@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>TV Regional Magallanes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="LOGOS/ICON.png">
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
@@ -13,210 +12,195 @@ html, body {
   margin: 0;
   padding: 0;
   background: black;
-  width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
-#playerContainer {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-video, audio {
-  width: 100%;
-  height: 100%;
+video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
   background: black;
 }
 
-#radioBg {
+#info {
   position: absolute;
-  inset: 0;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: none;
-}
-
-#overlay {
-  position: absolute;
-  bottom: 8%;
+  bottom: 5%;
   left: 5%;
   display: flex;
   align-items: center;
   gap: 15px;
-  background: rgba(0,0,0,.7);
+  background: rgba(0,0,0,0.6);
   padding: 15px 20px;
-  border-radius: 12px;
-  opacity: 0;
-  transition: opacity .3s;
-}
-
-#overlay img {
-  height: 60px;
-}
-
-#overlayText {
+  border-radius: 10px;
   color: white;
+  font-family: Arial, sans-serif;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-#overlayText .num {
-  font-size: 22px;
-  font-weight: bold;
+#info img {
+  width: 60px;
+  height: auto;
 }
 
-#overlayText .name {
+#info span {
   font-size: 18px;
-}
-
-#hint {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  color: #aaa;
-  font-size: 12px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="playerContainer">
-  <video id="video" autoplay playsinline></video>
-  <audio id="audio"></audio>
-  <div id="radioBg"></div>
+<video id="player" autoplay playsinline></video>
 
-  <div id="overlay">
-    <img id="overlayLogo">
-    <div id="overlayText">
-      <div class="num" id="overlayNum"></div>
-      <div class="name" id="overlayName"></div>
-    </div>
-  </div>
-
-  <div id="hint">TV Regional Magallanes - Siguenos en Instagram</div>
+<div id="info">
+  <img id="logo">
+  <span id="text"></span>
 </div>
 
 <script>
-/* ===================== LISTAS ===================== */
-
-const canalesTV = [
-  {numero:0,nombre:"Tv Regional Magallanes",tipo:"tv",url:"https://c4pit4nvodk4.github.io/TvRegionalMagallanes/Trailer.webm",logo:"https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png"loop: true},
-  {numero:1,nombre:"Pingüino TV",tipo:"tv",url:"https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8",logo:"LOGOS/PINGUINOMULTIMEDIA.png"},
-  {numero:2,nombre:"Radio Magallanes TV",tipo:"tv",url:"https://live20.bozztv.com/akamaissh101/ssh101/radiomagallanes/playlist.m3u8",logo:"LOGOS/RADIOMAGALLANES.png"},
-  {numero:3,nombre:"Polar TV",tipo:"tv",url:"https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8",logo:"LOGOS/POLARCOMUNICACIONES.png"},
-  {numero:4,nombre:"ITV Patagonia",tipo:"tv",url:"https://unlimited1-cl-isp.dps.live/itv/itv.smil/playlist.m3u8?PlaylistM3UCL",logo:"LOGOS/ITV.png"},
-  {numero:5,nombre:"Soberanía TV",tipo:"tv",url:"https://tls-cl.cdnz.cl/radiosoberania/live/playlist.m3u8?PlaylistM3UCL",logo:"LOGOS/SOBERANIATV.png"},
-  {numero:6,nombre:"Radio Ibáñez TV",tipo:"tv",url:"https://ibanez.servercl.com/hls/live.m3u8",logo:"LOGOS/RADIOIBAÑEZ.png"},
-  {numero:7,nombre:"Milodón TV",tipo:"tv",url:"https://video3.servidordevideo.net:3585/live/upbsfzhdlive.m3u8",logo:"LOGOS/MILODONTV.png"},
-  {numero:8,nombre:"CTV 35",tipo:"tv",url:"https://vdochile.com:3697/hybrid/play.m3u8",logo:"LOGOS/CTV35.png"},
-  {numero:9,nombre:"Opinión Sur TV",tipo:"tv",url:"https://stmv5.voxtvhd.com.br/opinionsur/opinionsur/playlist.m3u8?PlaylistM3UCL",logo:"LOGOS/OPINIONSURTV.png"},
-  {numero:10,nombre:"UMAG TV 1",tipo:"tv",url:"https://tls-cl.cdnz.cl/umag1/ngrp:live_all/playlist.m3u8",logo:"LOGOS/UMAGTV1.png"},
-  {numero:11,nombre:"UMAG TV 2",tipo:"tv",url:"https://tls-cl.cdnz.cl/umag2/live/playlist.m3u8",logo:"LOGOS/UMAGTV2.png"},
-  {numero:20,nombre:"Mega",tipo:"tv",url:"https://unlimited1-cl-isp.dps.live/mega/mega.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/455_Mega.png"},
-  {numero:21,nombre:"Meganoticias",tipo:"tv",url:"https://mdstrm.com/live-stream-playlist/561430ae330428c223687e1e.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/449_Meganoticias.png"},
-  {numero:22,nombre:"CHV",tipo:"tv",url:"https://mdstrm.com/live-stream-playlist/6491ced935a5833c47dd7f41.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/1153_CHV.png"},
-  {numero:23,nombre:"CHV Deportes",tipo:"tv",url:"https://mdstrm.com/live-stream-playlist/6531749eaf244059b3ade17b.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/1569_CHV_Deportes.png"},
-  {numero:24,nombre:"Canal 13",tipo:"tv",url:"https://m3u.cl/channel/c13.php?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/457_Canal_13.png"},
-  {numero:25,nombre:"T13",tipo:"tv",url:"https://redirector.rudo.video/hls-video/10b92cafdf3646cbc1e727f3dc76863621a327fd/t13/t13.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/1054_T13.png"},
-  {numero:26,nombre:"Bio Bio TV",tipo:"tv",url:"https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/bbtv/bbtv.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/421_Bio_Bio_TV.png"},
-  {numero:27,nombre:"TV+",tipo:"tv",url:"https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/tvmas/tvmas.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/458_TV_.png"},
-  {numero:28,nombre:"UCV TV",tipo:"tv",url:"https://unlimited2-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8?PlaylistM3UCL",logo:"https://cdn.m3u.cl/logo/54_UCV.png"}
+const canales = [
+  {
+    numero: 0,
+    nombre: "TV Regional Magallanes",
+    logo: "https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png",
+    url: "https://c4pit4nvodk4.github.io/TvRegionalMagallanes/Trailer.webm",
+    loop: true
+  },
+  {
+    numero: 1,
+    nombre: "UMAG TV",
+    logo: "LOGOS/UMAGTV2.png",
+    url: "https://tls-cl.cdnz.cl/umag2/live/playlist.m3u8"
+  },
+  {
+    numero: 2,
+    nombre: "SUR TV",
+    logo: "LOGOS/SURTV.png",
+    url: "https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/surtv/surtv.smil/playlist.m3u8?did="
+  },
+  {
+    numero: 3,
+    nombre: "Eva Visión",
+    logo: "LOGOS/EVAVISION.png",
+    url: "https://stmv4.voxtvhd.com.br/evavision/evavision/playlist.m3u8"
+  },
+  {
+    numero: 4,
+    nombre: "Eva Retro",
+    logo: "LOGOS/EVAVISIONRETRO.png",
+    url: "https://premium.tvcontrolcp.com:1936/evaretro/evaretro/playlist.m3u8"
+  },
+  {
+    numero: 5,
+    nombre: "Patagonia TV",
+    logo: "LOGOS/PATAGONIATV.png",
+    url: "https://videohd.live:19360/8100/8100.m3u8"
+  },
+  {
+    numero: 6,
+    nombre: "Canal Sur Patagonia",
+    logo: "LOGOS/CANALSURPATAGONIA.png",
+    url: "https://v2.tustreaming.cl/fmarcoirirs/tracks-v1a1/playlist.m3u8?PlaylistM3UCL"
+  },
+  {
+    numero: 7,
+    nombre: "Red Fueguina",
+    logo: "LOGOS/redfueguinamedios.png",
+    url: "https://stmv5.voxtvhd.com.br/redfueguina/redfueguina/playlist.m3u8"
+  },
+  {
+    numero: 8,
+    nombre: "Radio Navarino",
+    logo: "LOGOS/RADIONAVARINO.png",
+    url: "https://panel.tvstream.cl:1936/matxnmjryy/matxnmjryy/playlist.m3u8"
+  },
+  {
+    numero: 9,
+    nombre: "Mega",
+    logo: "https://cdn.m3u.cl/logo/455_Mega.png",
+    url: "https://unlimited1-cl-isp.dps.live/mega/mega.smil/playlist.m3u8?PlaylistM3UCL"
+  },
+  {
+    numero: 10,
+    nombre: "CHV",
+    logo: "https://cdn.m3u.cl/logo/1153_CHV.png",
+    url: "https://mdstrm.com/live-stream-playlist/6491ced935a5833c47dd7f41.m3u8?PlaylistM3UCL"
+  },
+  {
+    numero: 11,
+    nombre: "Canal 13",
+    logo: "https://cdn.m3u.cl/logo/457_Canal_13.png",
+    url: "https://m3u.cl/channel/c13.php?PlaylistM3UCL"
+  }
 ];
-
-const radios = [
-  {numero:101,nombre:"Radio Sur",tipo:"radio",url:"https://sonicpanel.cloudstreaming.eu/8078/stream",logo:"LOGOS/RadioSur.png"},
-  {numero:102,nombre:"Faraónica Natales",tipo:"radio",url:"https://179.9.164.55:1935/radio",logo:"LOGOS/FARAONICANATALES.png"},
-  {numero:103,nombre:"Meridional FM",tipo:"radio",url:"https://sonic.nnw.cl/8028/stream",logo:"LOGOS/MERIDIONAL.png"},
-  {numero:104,nombre:"Patagonia Austral",tipo:"radio",url:"https://sonicpanel.globalstream.pro/8170/stream",logo:"LOGOS/PATAGONIAAUSTRAL.png"},
-  {numero:105,nombre:"Camelot FM",tipo:"radio",url:"https://sonicpanel.globalstream.pro/8032/stream",logo:"LOGOS/CamelotFM.png"},
-  {numero:106,nombre:"Stylo FM",tipo:"radio",url:"https://cdn.instream.audio/stream/stylojor",logo:"LOGOS/STYLOFM.png"},
-  {numero:107,nombre:"Nuevo Día FM",tipo:"radio",url:"https://streaming01.shockmedia.com.ar:10791",logo:"LOGOS/NuevoDiaFMpng.png"},
-  {numero:108,nombre:"Generación Retro",tipo:"radio",url:"https://sonic.streamingchilenos.com/9634/;",logo:"LOGOS/GENERACIONRETRO.png"},
-  {numero:109,nombre:"Natalíssima",tipo:"radio",url:"https://sonicpanel.globalstream.pro/8246/stream",logo:"LOGOS/NATALISSIMA.png"},
-  {numero:110,nombre:"Radio Cooperativa",tipo:"radio",url:"http://stream.cooperativa.cl/cooperativa_link.mp3",logo:"https://cdn.instant.audio/images/logos/emisora-cl/cooperativa.png"},
-  {numero:111,nombre:"Radio Carnaval",tipo:"radio",url:"https://sonando-us.digitalproserver.com/carnaval_antofagasta.aac",logo:"https://cdn.instant.audio/images/logos/emisora-cl/carnaval-vina.png"}
-];
-
-const lista = [...canalesTV, ...radios];
-
-/* ===================== PLAYER ===================== */
 
 let index = 0;
 let hls;
-const video = document.getElementById("video");
-const audio = document.getElementById("audio");
-const radioBg = document.getElementById("radioBg");
+const video = document.getElementById("player");
 
-function reproducir(i){
-  index = (i + lista.length) % lista.length;
-  const c = lista[index];
+function cargarCanal(i) {
+  index = (i + canales.length) % canales.length;
+  const c = canales[index];
 
-  video.pause(); audio.pause();
-  video.style.display = "none";
-  audio.style.display = "none";
-  radioBg.style.display = "none";
+  if (hls) hls.destroy();
+  video.pause();
+  video.loop = c.loop || false;
 
-  if(c.tipo === "tv"){
-    video.style.display = "block";
-    if(hls){ hls.destroy(); }
-    if(video.canPlayType("application/vnd.apple.mpegurl")){
-      video.src = c.url;
-    } else {
-      hls = new Hls();
-      hls.loadSource(c.url);
-      hls.attachMedia(video);
-    }
-    video.play();
+  if (c.url.endsWith(".webm")) {
+    video.src = c.url;
+  } else if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(c.url);
+    hls.attachMedia(video);
   } else {
-    audio.style.display = "block";
-    radioBg.style.display = "block";
-    radioBg.style.backgroundImage = `url(${c.logo})`;
-    audio.src = c.url;
-    audio.play();
+    video.src = c.url;
   }
 
-  mostrarOverlay(c);
+  video.play();
+  mostrarInfo(c);
 }
 
-function mostrarOverlay(c){
-  overlayLogo.src = c.logo;
-  overlayNum.textContent = c.numero;
-  overlayName.textContent = c.nombre;
-  overlay.style.opacity = 1;
-  clearTimeout(window.ov);
-  window.ov = setTimeout(()=>overlay.style.opacity=0,3000);
+function mostrarInfo(c) {
+  const info = document.getElementById("info");
+  document.getElementById("logo").src = c.logo;
+  document.getElementById("text").innerText = `${c.numero} - ${c.nombre}`;
+  info.style.opacity = 1;
+  setTimeout(() => info.style.opacity = 0, 2500);
 }
 
-/* ===================== CONTROLES ===================== */
+// TECLADO / CONTROL
+let buffer = "";
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowUp") cargarCanal(index + 1);
+  if (e.key === "ArrowDown") cargarCanal(index - 1);
+  if (e.key === "+") video.volume = Math.min(1, video.volume + 0.1);
+  if (e.key === "-") video.volume = Math.max(0, video.volume - 0.1);
 
-document.addEventListener("keydown", e=>{
-  if(e.key==="ArrowUp") reproducir(index+1);
-  if(e.key==="ArrowDown") reproducir(index-1);
-  if(e.key==="+") video.volume = audio.volume = Math.min(1, video.volume+0.1);
-  if(e.key==="-") video.volume = audio.volume = Math.max(0, video.volume-0.1);
-  if(/[0-9]/.test(e.key)){
-    const num = parseInt(e.key);
-    const ch = lista.find(c=>c.numero===num);
-    if(ch) reproducir(lista.indexOf(ch));
+  if (!isNaN(e.key)) {
+    buffer += e.key;
+    clearTimeout(window.timer);
+    window.timer = setTimeout(() => {
+      const num = parseInt(buffer);
+      const i = canales.findIndex(c => c.numero === num);
+      if (i >= 0) cargarCanal(i);
+      buffer = "";
+    }, 800);
   }
 });
 
-/* Gestos táctiles */
-let yStart=null;
-document.addEventListener("touchstart",e=>yStart=e.touches[0].clientY);
-document.addEventListener("touchend",e=>{
-  if(yStart===null) return;
-  let yEnd=e.changedTouches[0].clientY;
-  if(yStart-yEnd>50) reproducir(index+1);
-  if(yEnd-yStart>50) reproducir(index-1);
-  yStart=null;
+// GESTOS TÁCTILES
+let startY = 0;
+document.addEventListener("touchstart", e => startY = e.touches[0].clientY);
+document.addEventListener("touchend", e => {
+  const endY = e.changedTouches[0].clientY;
+  if (startY - endY > 50) cargarCanal(index + 1);
+  if (endY - startY > 50) cargarCanal(index - 1);
 });
 
-/* INICIO */
-reproducir(0);
+// INICIO
+cargarCanal(0);
 </script>
 
 </body>
