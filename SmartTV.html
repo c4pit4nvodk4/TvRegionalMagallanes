@@ -14,7 +14,7 @@ html,body{
   height:100%;
   background:black;
   overflow:hidden;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 video{
@@ -30,26 +30,28 @@ video{
   height:100%;
   object-fit:contain;
   display:none;
+  background:black;
 }
 
-/* ===== OVERLAY INFO ===== */
+/* ===== OVERLAY ===== */
 #overlay{
   position:absolute;
   bottom:20px;
   left:20px;
-  background:rgba(0,0,0,.7);
-  padding:15px;
-  border-radius:14px;
+  background:rgba(0,0,0,.75);
+  padding:14px 18px;
+  border-radius:16px;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:14px;
   opacity:0;
-  transition:.5s;
+  transition:.4s;
+  z-index:10;
 }
 
 #overlay.show{opacity:1;}
 
-#overlay img{height:50px;}
+#overlay img{height:48px;}
 #overlay .info{color:white;}
 #overlay .info strong{font-size:18px;}
 #overlay .info span{font-size:14px;opacity:.8;}
@@ -66,13 +68,14 @@ video{
   right:20px;
   top:50%;
   transform:translateY(-50%) translateX(120%);
-  width:300px;
+  width:320px;
   max-height:75%;
-  background:rgba(0,0,0,.75);
-  border-radius:16px;
+  background:rgba(0,0,0,.8);
+  border-radius:18px;
   overflow:hidden;
   opacity:0;
   transition:.4s;
+  z-index:9;
 }
 
 #channelList.show{
@@ -83,22 +86,29 @@ video{
 #channelItems{
   max-height:100%;
   overflow-y:auto;
+  scroll-behavior:smooth;
 }
 
 .channel-item{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:10px;
+  gap:12px;
+  padding:10px 14px;
   color:white;
-  opacity:.6;
+  opacity:.55;
 }
 
-.channel-item img{height:34px;}
-.channel-item span{font-size:14px;}
+.channel-item img{
+  height:36px;
+  width:auto;
+}
+
+.channel-item span{
+  font-size:14px;
+}
 
 .channel-item.active{
-  background:rgba(255,255,255,.15);
+  background:rgba(255,255,255,.18);
   opacity:1;
 }
 </style>
@@ -109,7 +119,7 @@ video{
 <video id="player" autoplay muted playsinline></video>
 <img id="audioLogo">
 
-<!-- Overlay info -->
+<!-- Overlay -->
 <div id="overlay">
   <img id="overlayLogo">
   <div class="info">
@@ -179,7 +189,7 @@ const channels = [
 {number:110,name:"Carnaval FM",type:"radio",url:"https://sonando-us.digitalproserver.com/carnaval_antofagasta.aac",logo:"https://cdn.instant.audio/images/logos/emisora-cl/carnaval-vina.png"}
 ];
 
-/* ===== FUNCIONES ===== */
+/* ===== LISTA + AUTOSCROLL ===== */
 function renderChannelList(){
   channelItems.innerHTML="";
   channels.forEach((c,i)=>{
@@ -188,30 +198,40 @@ function renderChannelList(){
     div.innerHTML=`<img src="${c.logo}"><span>${c.number} · ${c.name}</span>`;
     channelItems.appendChild(div);
   });
-  const active=document.querySelector(".channel-item.active");
-  if(active) channelItems.scrollTop=active.offsetTop-channelItems.clientHeight/2;
+  scrollActive();
 }
 
+function scrollActive(){
+  const active=document.querySelector(".channel-item.active");
+  if(active){
+    active.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+}
+
+/* ===== OVERLAY ===== */
 function showOverlay(ch){
   overlayLogo.src=ch.logo;
   overlayName.textContent=ch.name;
   overlayNumber.textContent="Canal "+ch.number;
+
   overlay.classList.add("show");
   channelList.classList.add("show");
   renderChannelList();
 
   clearTimeout(overlayTimeout);
   clearTimeout(listTimeout);
+
   overlayTimeout=setTimeout(()=>overlay.classList.remove("show"),3500);
   listTimeout=setTimeout(()=>channelList.classList.remove("show"),4000);
 }
 
+/* ===== CARGAR CANAL ===== */
 function loadChannel(i){
   if(i<0) i=channels.length-1;
   if(i>=channels.length) i=0;
   currentChannel=i;
-  const ch=channels[i];
 
+  const ch=channels[i];
   video.pause();
   video.src="";
   audioLogo.style.display="none";
@@ -230,18 +250,21 @@ function loadChannel(i){
       const hls=new Hls();
       hls.loadSource(ch.url);
       hls.attachMedia(video);
-    }else video.src=ch.url;
+    }else{
+      video.src=ch.url;
+    }
     video.play();
   }
+
   showOverlay(ch);
 }
 
-/* CONTROLES */
+/* ===== CONTROLES ===== */
 document.addEventListener("keydown",e=>{
   if(e.key==="ArrowUp") loadChannel(currentChannel-1);
   if(e.key==="ArrowDown") loadChannel(currentChannel+1);
   if(e.key==="+") video.volume=Math.min(1,video.volume+.1);
-  if(e.key==="-" ) video.volume=Math.max(0,video.volume-.1);
+  if(e.key==="-") video.volume=Math.max(0,video.volume-.1);
 
   if(/[0-9]/.test(e.key)){
     inputNumber+=e.key;
@@ -249,11 +272,11 @@ document.addEventListener("keydown",e=>{
       const idx=channels.findIndex(c=>c.number==inputNumber);
       if(idx!=-1) loadChannel(idx);
       inputNumber="";
-    },800);
+    },700);
   }
 });
 
-/* GESTOS */
+/* ===== GESTOS ===== */
 let startY=0;
 document.addEventListener("touchstart",e=>startY=e.touches[0].clientY);
 document.addEventListener("touchend",e=>{
