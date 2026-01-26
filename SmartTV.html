@@ -256,7 +256,38 @@ document.addEventListener("touchend",e=>{
 });
 
 loadChannel(0);
+
+/* ===== CLICK / TAP SUPERIOR - INFERIOR ===== */
+document.addEventListener("click", e => {
+  const h = window.innerHeight;
+  const y = e.clientY;
+
+  // PARTE SUPERIOR → AVANZA CANAL
+  if (y < h / 2) {
+    loadChannel((current + 1) % channels.length);
+  }
+  // PARTE INFERIOR → RETROCEDE CANAL
+  else {
+    loadChannel((current - 1 + channels.length) % channels.length);
+  }
+});
+
+/* PREVIENE DOBLE DISPARO EN MÓVILES */
+document.addEventListener("touchend", e => {
+  const h = window.innerHeight;
+  const y = e.changedTouches[0].clientY;
+
+  // PARTE SUPERIOR → AVANZA CANAL
+  if (y < h / 2) {
+    loadChannel((current + 1) % channels.length);
+  }
+  // PARTE INFERIOR → RETROCEDE CANAL
+  else {
+    loadChannel((current - 1 + channels.length) % channels.length);
+  }
+});
 </script>
+
 
 </body>
 </html>
