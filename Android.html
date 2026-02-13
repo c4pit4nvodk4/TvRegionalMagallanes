@@ -1,103 +1,231 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Descargar TV Regional Magallanes</title>
-  <link href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/ICON.png" rel="icon" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV Regional Magallanes | Descargar</title>
 
-    .portada {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
+<link rel="icon" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/ICON.png">
 
-    .boton-descarga {
-      display: inline-flex;
-      align-items: center;
-      background-color: #3ddc84;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      margin: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      transition: background-color 0.3s;
-    }
+<!-- Fuente moderna -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    .boton-descarga:hover {
-      opacity: 0.9;
-    }
+<style>
 
-    .boton-descarga img {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
-    }
+:root{
+  --color-principal:#00c853;
+  --color-secundario:#00796b;
+  --color-fondo:#0f172a;
+  --color-tarjeta:#111827;
+  --color-texto:#ffffff;
+  --color-texto-sec:#94a3b8;
+}
 
-    .botones {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
+*{
+  box-sizing:border-box;
+}
 
-    @media (min-width: 600px) {
-      .botones {
-        flex-direction: row;
-      }
-    }
-  </style>
+body{
+  margin:0;
+  font-family:'Inter', sans-serif;
+  background: linear-gradient(135deg,#0f172a,#020617);
+  color:var(--color-texto);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+/* TARJETA PRINCIPAL */
+
+.contenedor{
+  width:100%;
+  max-width:500px;
+  background:var(--color-tarjeta);
+  border-radius:20px;
+  padding:30px 25px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  text-align:center;
+  animation:fadeIn 0.6s ease;
+}
+
+/* LOGO */
+
+.logo{
+  width:120px;
+  margin-bottom:15px;
+}
+
+h1{
+  margin:10px 0 5px 0;
+  font-weight:700;
+  font-size:24px;
+}
+
+.descripcion{
+  color:var(--color-texto-sec);
+  font-size:14px;
+  margin-bottom:25px;
+}
+
+/* BOTONES */
+
+.botones{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* BOTON BASE */
+
+.boton{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:14px;
+  border-radius:12px;
+  text-decoration:none;
+  color:white;
+  font-weight:600;
+  font-size:15px;
+  transition:all 0.25s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ICONOS */
+
+.boton img{
+  width:22px;
+}
+
+/* COLORES ESPECIFICOS */
+
+.android{
+  background:linear-gradient(135deg,#00c853,#00e676);
+}
+
+.windows{
+  background:linear-gradient(135deg,#0078d4,#2196f3);
+}
+
+.ios{
+  background:linear-gradient(135deg,#374151,#6b7280);
+}
+
+.tv{
+  background:linear-gradient(135deg,#7c3aed,#9333ea);
+}
+
+/* EFECTO HOVER */
+
+.boton:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* FOOTER */
+
+.footer{
+  margin-top:20px;
+  font-size:12px;
+  color:#64748b;
+}
+
+/* ANIMACION */
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* RESPONSIVE PARA PC */
+
+@media(min-width:600px){
+
+  .contenedor{
+    max-width:550px;
+  }
+
+  h1{
+    font-size:26px;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- Imagen de portada -->
-  <img class="portada" src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png" alt="Portada TV Regional Magallanes" />
+<div class="contenedor">
 
-  <!-- Botones de descarga -->
-  <div class="botones">
-    <!-- Botón Android -->
-    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/TvRegionalMagallanes.apk" download>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android" />
-      Descargar para Android
-    </a>
+<img class="logo"
+src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png">
 
-    <!-- Botón Windows -->
-    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/2048px-Windows_logo_-_2012.svg.png" alt="Windows" />
-      Descargar para Windows
-    </a>
+<h1>TV Regional Magallanes</h1>
 
-    <!-- Botón iOS -->
-    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="iOS" />
-      Descargar para iOS
-    </a>
+<div class="descripcion">
+Descarga la aplicación oficial y disfruta de TV regional en cualquier dispositivo.
+</div>
 
-    <!-- Botón Smart TV -->
-    <a class="boton-descarga" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/SmartTV.html" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/HD-TV_Logo.svg" alt="iOS" />
-      Descargar para Smart TV - DEMO
-    </a>    
-  </div>
-  
-<script type="text/javascript" src="https://contador.websiteout.com/js/7/0/0/0"></script>
+<div class="botones">
+
+<a class="boton android"
+href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/TvRegionalMagallanes.apk"
+download>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
+Descargar para Android
+
+</a>
+
+
+<a class="boton windows"
+href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes"
+target="_blank">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg">
+Descargar para Windows
+
+</a>
+
+
+<a class="boton ios"
+href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes"
+target="_blank">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
+Descargar para iOS
+
+</a>
+
+
+<a class="boton tv"
+href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/SmartTV.html"
+target="_blank">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/HD-TV_Logo.svg">
+Smart TV (Demo)
+
+</a>
+
+</div>
+
+<div class="footer">
+© 2026 TV Regional Magallanes
+</div>
+
+</div>
+
+<script src="https://contador.websiteout.com/js/7/0/0/0"></script>
+
 </body>
 </html>
