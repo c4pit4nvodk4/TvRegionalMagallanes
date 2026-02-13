@@ -74,6 +74,51 @@
       max-height: 70px;
       object-fit: contain;
     }
+/* ========================= */
+/* BARRA DE CANALES OVERLAY */
+/* ========================= */
+
+.overlay-canales {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0,0,0,0.65);
+  padding: 8px 14px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.overlay-canales.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-canales img {
+  height: 42px;
+  border-radius: 8px;
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.overlay-canales img.actual {
+  height: 55px;
+  opacity: 1;
+}
+
+.overlay-canales button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
 
     @media (min-width: 768px) {
       .grid {
@@ -92,11 +137,29 @@
   </div>
 
   <!-- Reproductor -->
-  <div class="player-container">
-    <video id="player" controls muted loop playsinline>
-      <source src="MENU/Trailer.webm" type="video/webm">
-    </video>
+<div class="player-container">
+
+  <video id="player" controls muted loop playsinline>
+    <source src="MENU/Trailer.webm" type="video/webm">
+  </video>
+
+  <!-- BARRA DE CANALES -->
+  <div id="overlayCanales" class="overlay-canales">
+
+    <button onclick="canalAnterior()">⟨</button>
+
+    <img id="logoAnterior">
+
+    <img id="logoActual" class="actual">
+
+    <img id="logoSiguiente">
+
+    <button onclick="canalSiguiente()">⟩</button>
+
   </div>
+
+</div>
+
 
   <!-- Canales -->
   <div class="section-img">
@@ -180,8 +243,51 @@
 <script>
   const video = document.getElementById('player');
   let hls;
+  let listaCanales = [];
+let canalActual = -1;
+let overlayTimer = null;
 
-  function abrirReproductor(url) {
+const overlay = document.getElementById("overlayCanales");
+const logoAnterior = document.getElementById("logoAnterior");
+const logoActual = document.getElementById("logoActual");
+const logoSiguiente = document.getElementById("logoSiguiente");
+
+
+function abrirReproductor(url) {
+
+  video.muted = false;
+  video.loop = false;
+
+  if (Hls.isSupported() && url.includes('.m3u8')) {
+
+    if (hls) hls.destroy();
+
+    hls = new Hls();
+
+    hls.loadSource(url);
+
+    hls.attachMedia(video);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+
+      video.play();
+
+    });
+
+  }
+  else {
+
+    video.src = url;
+
+    video.play();
+
+  }
+
+  canalActual = listaCanales.findIndex(c => c.url === url);
+
+  actualizarOverlay();
+
+}
     video.muted = false;
     video.loop = false;
 
@@ -200,7 +306,73 @@
       video.requestFullscreen?.();
     }
   }
+  window.addEventListener("load", () => {
+
+  document.querySelectorAll(".grid a").forEach((elemento) => {
+
+    const onclick = elemento.getAttribute("onclick");
+
+    if (!onclick) return;
+
+    const url = onclick.split("'")[1];
+
+    const logo = elemento.querySelector("img").src;
+
+    listaCanales.push({url, logo});
+
+  });
+
+});
+function canalAnterior() {
+
+  if (canalActual > 0) {
+
+    abrirReproductor(listaCanales[canalActual - 1].url);
+
+  }
+
+}
+
+function canalSiguiente() {
+
+  if (canalActual < listaCanales.length - 1) {
+
+    abrirReproductor(listaCanales[canalActual + 1].url);
+
+  }
+
+}
+
+function actualizarOverlay() {
+
+  logoActual.src = listaCanales[canalActual]?.logo || "";
+
+  logoAnterior.src = listaCanales[canalActual - 1]?.logo || "";
+
+  logoSiguiente.src = listaCanales[canalActual + 1]?.logo || "";
+
+  mostrarOverlay();
+
+}
+
+function mostrarOverlay() {
+
+  overlay.classList.add("visible");
+
+  if (overlayTimer) clearTimeout(overlayTimer);
+
+  overlayTimer = setTimeout(() => {
+
+    overlay.classList.remove("visible");
+
+  }, 3000);
+
+}
+
+video.addEventListener("click", mostrarOverlay);
+
 </script>
 
 </body>
 </html>
+
