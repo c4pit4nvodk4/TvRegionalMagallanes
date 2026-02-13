@@ -7,7 +7,6 @@
 
 <link rel="icon" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/ICON.png">
 
-<!-- Fuente moderna -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -37,8 +36,6 @@ body{
   padding:20px;
 }
 
-/* TARJETA PRINCIPAL */
-
 .contenedor{
   width:100%;
   max-width:500px;
@@ -49,8 +46,6 @@ body{
   text-align:center;
   animation:fadeIn 0.6s ease;
 }
-
-/* LOGO */
 
 .logo{
   width:120px;
@@ -69,15 +64,11 @@ h1{
   margin-bottom:25px;
 }
 
-/* BOTONES */
-
 .botones{
   display:flex;
   flex-direction:column;
   gap:12px;
 }
-
-/* BOTON BASE */
 
 .boton{
   display:flex;
@@ -94,13 +85,15 @@ h1{
   box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* ICONOS */
-
 .boton img{
   width:22px;
 }
 
-/* COLORES ESPECIFICOS */
+/* COLORES */
+
+.web{
+  background:linear-gradient(135deg,#0284c7,#38bdf8);
+}
 
 .android{
   background:linear-gradient(135deg,#00c853,#00e676);
@@ -118,22 +111,16 @@ h1{
   background:linear-gradient(135deg,#7c3aed,#9333ea);
 }
 
-/* EFECTO HOVER */
-
 .boton:hover{
   transform:translateY(-3px) scale(1.02);
   box-shadow:0 8px 20px rgba(0,0,0,0.6);
 }
-
-/* FOOTER */
 
 .footer{
   margin-top:20px;
   font-size:12px;
   color:#64748b;
 }
-
-/* ANIMACION */
 
 @keyframes fadeIn{
   from{
@@ -144,20 +131,6 @@ h1{
     opacity:1;
     transform:translateY(0);
   }
-}
-
-/* RESPONSIVE PARA PC */
-
-@media(min-width:600px){
-
-  .contenedor{
-    max-width:550px;
-  }
-
-  h1{
-    font-size:26px;
-  }
-
 }
 
 </style>
@@ -173,10 +146,22 @@ src="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/LOGOS/LOGO.png">
 <h1>TV Regional Magallanes</h1>
 
 <div class="descripcion">
-Descarga la aplicación oficial y disfruta de TV regional en cualquier dispositivo.
+Descarga la aplicación oficial o usa la versión web desde tu navegador.
 </div>
 
 <div class="botones">
+
+<!-- NUEVO BOTON VERSION WEB -->
+
+<a class="boton web"
+href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/"
+target="_blank">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Globe_icon.svg">
+Versión Web
+
+</a>
+
 
 <a class="boton android"
 href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/TvRegionalMagallanes.apk"
@@ -189,7 +174,7 @@ Descargar para Android
 
 
 <a class="boton windows"
-href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes"
+href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/TVRegionalMagallanes.lnk"
 target="_blank">
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg">
@@ -209,7 +194,7 @@ Descargar para iOS
 
 
 <a class="boton tv"
-href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/SmartTV.html"
+href="https://c4pit4nvodk4.github.io/SmartTvRegionalMagallanes"
 target="_blank">
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/HD-TV_Logo.svg">
@@ -223,9 +208,6 @@ Smart TV (Demo)
 © 2026 TV Regional Magallanes
 </div>
 
-</div>
-
-<script src="https://contador.websiteout.com/js/7/0/0/0"></script>
 
 </body>
 </html>
