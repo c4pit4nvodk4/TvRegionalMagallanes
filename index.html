@@ -48,6 +48,29 @@
       margin: 25px 0 10px;
     }
 
+    /* Encabezado estilo tarjeta para la sección Canales */
+    .section-img .section-header {
+      background: #ffffff;
+      border: 5px solid #0ea5f9; /* azul */
+      border-radius: 10px;
+      padding: 18px 16px;
+      box-shadow: 0 8px 20px rgba(2,6,23,0.18);
+      text-align: center;
+      color: #000;
+    }
+    .section-img .section-title {
+      font-weight: 700;
+      font-size: 20px;
+      color: #000;
+      line-height: 1;
+    }
+    .section-img .section-subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #000;
+      opacity: 0.9;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -106,14 +129,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Reproductor -->
   <div class="player-container">
-    <video id="player" controls muted loop playsinline>
+    <video id="player" controls muted autoplay loop playsinline>
       <source src="MENU/Trailer.webm" type="video/webm">
     </video>
   </div>
 
   <!-- Canales -->
   <div class="section-img">
-    <img src="MENU/CANALES.png" alt="Canales">
+    <div class="section-header">
+      <div class="section-title">Canales</div>
+      <div class="section-subtitle">Regionales y Nacionales</div>
+    </div>
   </div>
 
   <div class="grid">
@@ -155,7 +181,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Radios -->
   <div class="section-img">
-    <img src="MENU/RADIOS.png" alt="Radios">
+    <div class="section-header">
+      <div class="section-title">Radios</div>
+      <div class="section-subtitle">Regionales y Nacionales</div>
+    </div>
   </div>
 
   <div class="grid">
@@ -193,6 +222,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
   const video = document.getElementById('player');
   let hls;
+
+  // Intento de autoplay inmediato para el trailer (muted permite autoplay en la mayoría de navegadores)
+  try{ video.autoplay = true; video.play().catch(()=>{}); }catch(e){}
 
   function abrirReproductor(url) {
     video.muted = false;
