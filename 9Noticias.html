@@ -21,6 +21,7 @@
       --glow: rgba(0, 153, 255, 0.18);
       --border: rgba(255, 255, 255, 0.14);
       --shadow: rgba(0, 0, 0, 0.45);
+      --active: rgba(0, 170, 255, 0.55);
     }
 
     html, body {
@@ -130,6 +131,15 @@
       position: relative;
     }
 
+    video.active-audio {
+      border-color: var(--active);
+      box-shadow:
+        0 0 0 1px rgba(0, 170, 255, 0.20),
+        0 0 18px rgba(0, 170, 255, 0.28);
+      position: relative;
+      z-index: 3;
+    }
+
     .home-button {
       position: fixed;
       bottom: 16px;
@@ -177,7 +187,6 @@
       color: #a8e2ff;
     }
 
-    /* SIEMPRE 3 COLUMNAS, también en móvil */
     @media (max-width: 900px) {
       .grid {
         grid-template-columns: repeat(3, 1fr);
@@ -282,8 +291,26 @@
       "https://video3.servidordevideo.net:3585/live/upbsfzhdlive.m3u8"
     ];
 
+    const videos = [];
+    let activeVideo = null;
+
+    function setActiveAudio(selectedVideo) {
+      videos.forEach((video) => {
+        const isSelected = video === selectedVideo;
+        video.muted = !isSelected;
+        video.volume = isSelected ? 1 : 0;
+        video.classList.toggle("active-audio", isSelected);
+      });
+
+      activeVideo = selectedVideo;
+      selectedVideo.play().catch(() => {});
+    }
+
     streams.forEach((url, index) => {
       const video = document.getElementById(`video${index}`);
+      video.muted = true;
+      video.volume = 0;
+      videos.push(video);
 
       if (Hls.isSupported()) {
         const hls = new Hls({
@@ -309,11 +336,15 @@
       }
 
       video.addEventListener("click", () => {
-        if (video.paused) {
+        if (activeVideo === video) {
+          video.muted = false;
+          video.volume = 1;
+          video.classList.add("active-audio");
           video.play().catch(() => {});
-        } else {
-          video.pause();
+          return;
         }
+
+        setActiveAudio(video);
       });
     });
   </script>
