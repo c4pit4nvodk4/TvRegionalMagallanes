@@ -1,533 +1,816 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TV Regional Magallanes</title>
-  <link rel="icon" href="LOGOS/ICON.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV Regional Magallanes · Canales y Radios en Vivo</title>
+<meta name="description" content="Guía en vivo de canales de televisión y radios de la Región de Magallanes y de todo Chile. Sintoniza señales australes desde un solo lugar.">
+<meta property="og:title" content="TV Regional Magallanes">
+<meta property="og:description" content="Canales y radios en vivo de Magallanes y Chile, en un solo lugar.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#081018">
+<link rel="icon" href="LOGOS/ICON.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #0b0f16;
-      --bg-soft: #121826;
-      --panel: rgba(255,255,255,0.06);
-      --panel-border: rgba(255,255,255,0.1);
-      --card: #171e2d;
-      --card-hover: #1d2638;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --primary: #0ea5f9;
-      --primary-strong: #0284c7;
-      --accent: #38bdf8;
-      --success: #22c55e;
-      --shadow: 0 12px 30px rgba(0,0,0,0.28);
-      --shadow-hover: 0 18px 40px rgba(0,0,0,0.36);
-      --radius-xl: 20px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --transition: 0.28s ease;
-    }
+<style>
+  :root{
+    /* Paleta — el estrecho de Magallanes al anochecer */
+    --void:#060b13;
+    --bg-deep:#0a1520;
+    --bg-mid:#0d1c2c;
+    --panel:#101f30;
+    --panel-line:rgba(148,191,214,0.14);
+    --ice:#6fd8e8;
+    --ice-dim:#3e8fa3;
+    --horizon:#1c3a5c;
+    --amber:#f2a65a;
+    --amber-dim:#c97d3b;
+    --beacon:#ef5350;
+    --text:#eaf3f8;
+    --muted:#8ea6ba;
+    --muted-soft:#5f7688;
+    --radius-xl:22px;
+    --radius-lg:16px;
+    --radius-md:11px;
+    --shadow:0 14px 34px rgba(0,0,0,0.38);
+    --shadow-soft:0 8px 22px rgba(0,0,0,0.28);
+    --ease:0.25s cubic-bezier(.4,0,.2,1);
+    --font-display:'Fraunces',Georgia,serif;
+    --font-body:'Inter',system-ui,-apple-system,sans-serif;
+    --font-mono:'Space Mono',ui-monospace,monospace;
+  }
 
-    * {
-      box-sizing: border-box;
-    }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  ::selection{background:var(--ice);color:#04121a;}
 
-    html {
-      scroll-behavior: smooth;
-    }
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--text);
+    background:
+      radial-gradient(ellipse 900px 500px at 12% -10%, rgba(111,216,232,0.10), transparent 55%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(242,166,90,0.06), transparent 50%),
+      linear-gradient(180deg,var(--void) 0%,var(--bg-deep) 45%,var(--bg-mid) 100%);
+    min-height:100vh;
+  }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(14,165,249,0.14), transparent 28%),
-        radial-gradient(circle at top right, rgba(56,189,248,0.1), transparent 24%),
-        linear-gradient(180deg, #0a0f17 0%, #0d1320 55%, #0b0f16 100%);
-      min-height: 100vh;
-    }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+  }
 
-    .container {
-      max-width: 1240px;
-      margin: auto;
-      padding: 18px 14px 40px;
-    }
+  /* ---------- Barra superior ---------- */
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(6,11,19,0.86);
+    backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--panel-line);
+  }
+  .topbar-inner{
+    max-width:1240px;
+    margin:auto;
+    padding:12px 18px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(155deg,var(--ice),var(--horizon));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px rgba(111,216,232,0.25);
+    flex:none;
+  }
+  .brand-mark svg{width:19px;height:19px;}
+  .brand-text{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16.5px;
+    line-height:1.15;
+  }
+  .brand-text small{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:9.5px;
+    letter-spacing:1.6px;
+    color:var(--ice-dim);
+    font-weight:400;
+    text-transform:uppercase;
+    margin-top:1px;
+  }
 
-    /* Portada */
-    .portada {
-      margin-bottom: 18px;
-    }
+  .search-wrap{
+    flex:1;
+    max-width:420px;
+    margin-left:auto;
+    position:relative;
+  }
+  .search-wrap svg{
+    position:absolute;left:13px;top:50%;transform:translateY(-50%);
+    width:15px;height:15px;color:var(--muted-soft);pointer-events:none;
+  }
+  #buscador{
+    width:100%;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:999px;
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:13.5px;
+    padding:9px 14px 9px 36px;
+    outline:none;
+    transition:border-color var(--ease),box-shadow var(--ease);
+  }
+  #buscador::placeholder{color:var(--muted-soft);}
+  #buscador:focus{
+    border-color:var(--ice-dim);
+    box-shadow:0 0 0 3px rgba(111,216,232,0.14);
+  }
 
-    .portada img {
-      width: 100%;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+  .clock{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--muted);
+    border:1px solid var(--panel-line);
+    border-radius:999px;
+    padding:8px 13px;
+    white-space:nowrap;
+  }
+  .clock span{color:var(--ice);}
 
-    /* Reproductor */
-    .player-container {
-      position: relative;
-      width: 100%;
-      background: #000;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 28px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-    }
+  @media (max-width:780px){
+    .clock{display:none;}
+  }
+  @media (max-width:560px){
+    .brand-text{font-size:14.5px;}
+  }
 
-    .player-container::before {
-      content: "EN VIVO / STREAM";
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      z-index: 2;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(239,68,68,0.92);
-      box-shadow: 0 6px 18px rgba(239,68,68,0.35);
-      backdrop-filter: blur(8px);
-    }
+  .container{max-width:1240px;margin:auto;padding:22px 16px 48px;}
 
-    video {
-      width: 100%;
-      height: auto;
-      display: block;
-      background: #000;
-    }
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    border-radius:var(--radius-xl);
+    overflow:hidden;
+    margin-bottom:22px;
+    border:1px solid var(--panel-line);
+    box-shadow:var(--shadow);
+  }
+  .hero img{width:100%;display:block;}
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(6,11,19,0) 40%,rgba(6,11,19,0.88) 100%);
+  }
+  .hero-caption{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:26px 26px 22px;
+    z-index:2;
+  }
+  .hero-eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:2px;
+    color:var(--ice);
+    text-transform:uppercase;
+    margin:0 0 8px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--beacon);
+    box-shadow:0 0 0 0 rgba(239,83,80,0.6);
+    animation:beacon 2.2s infinite;
+  }
+  @keyframes beacon{
+    0%{box-shadow:0 0 0 0 rgba(239,83,80,0.55);}
+    70%{box-shadow:0 0 0 9px rgba(239,83,80,0);}
+    100%{box-shadow:0 0 0 0 rgba(239,83,80,0);}
+  }
+  .hero-caption h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(22px,4vw,34px);
+    margin:0 0 6px;
+    max-width:640px;
+  }
+  .hero-caption p{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    max-width:520px;
+  }
 
-    /* Secciones */
-    .section-img {
-      margin: 28px 0 14px;
-    }
+  /* ---------- Reproductor ---------- */
+  .player-panel{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:var(--radius-xl);
+    overflow:hidden;
+    margin-bottom:34px;
+    box-shadow:var(--shadow);
+  }
+  .player-container{
+    position:relative;
+    width:100%;
+    background:#000;
+    aspect-ratio:16/9;
+  }
+  video{width:100%;height:100%;display:block;background:#000;object-fit:contain;}
 
-    .section-header {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #ffffff 0%, #f3f8ff 100%);
-      border: 2px solid rgba(14,165,249,0.9);
-      border-radius: 18px;
-      padding: 18px 16px;
-      text-align: center;
-      color: #020617;
-      box-shadow: 0 10px 24px rgba(2,6,23,0.18);
-    }
+  .player-loading{
+    position:absolute;inset:0;z-index:4;
+    display:none;
+    align-items:center;justify-content:center;
+    background:rgba(6,11,19,0.72);
+    backdrop-filter:blur(3px);
+  }
+  .player-loading.active{display:flex;}
+  .spinner{
+    width:34px;height:34px;border-radius:50%;
+    border:3px solid rgba(111,216,232,0.2);
+    border-top-color:var(--ice);
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
 
-    .section-header::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        transparent 20%,
-        rgba(255,255,255,0.55) 45%,
-        transparent 70%
-      );
-      transform: translateX(-120%);
-      animation: shineHeader 4.5s linear infinite;
-      pointer-events: none;
-    }
+  .player-status{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:13px 18px;
+    border-top:1px solid var(--panel-line);
+  }
+  .player-status-left{display:flex;align-items:center;gap:10px;min-width:0;}
+  .player-status-left img{width:26px;height:26px;object-fit:contain;border-radius:6px;flex:none;background:#0b1723;}
+  .player-status-text{min-width:0;}
+  .player-status-label{
+    font-family:var(--font-mono);
+    font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--muted-soft);
+  }
+  .player-status-name{
+    font-size:14px;font-weight:600;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .player-fs{
+    flex:none;
+    border:1px solid var(--panel-line);
+    background:transparent;
+    color:var(--muted);
+    border-radius:9px;
+    padding:8px 11px;
+    cursor:pointer;
+    font-size:12px;
+    display:flex;align-items:center;gap:6px;
+    transition:border-color var(--ease),color var(--ease);
+  }
+  .player-fs:hover{border-color:var(--ice-dim);color:var(--ice);}
 
-    @keyframes shineHeader {
-      to {
-        transform: translateX(120%);
-      }
-    }
+  /* ---------- Divisor horizonte ---------- */
+  .horizon{
+    height:34px;margin:8px 0 20px;
+    background:
+      linear-gradient(180deg,transparent 49%,var(--panel-line) 50%,transparent 51%);
+    position:relative;
+  }
 
-    .section-title {
-      font-weight: 800;
-      font-size: 22px;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
+  /* ---------- Encabezados de sección ---------- */
+  .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin:0 0 16px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--panel-line);
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .section-head p{
+    margin:0;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .section-count{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--ice-dim);
+    border:1px solid var(--panel-line);
+    border-radius:999px;
+    padding:5px 11px;
+    white-space:nowrap;
+  }
 
-    .section-subtitle {
-      font-size: 14px;
-      color: #1e293b;
-      opacity: 0.9;
-    }
+  /* ---------- Grilla ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(108px,1fr));
+    gap:12px;
+  }
+  @media (min-width:768px){
+    .grid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));}
+  }
 
-    /* Grilla */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
-      gap: 14px;
-    }
+  .card{
+    position:relative;
+    overflow:hidden;
+    min-height:96px;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:var(--radius-lg);
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    text-decoration:none;
+    cursor:pointer;
+    box-shadow:var(--shadow-soft);
+    transition:transform var(--ease),border-color var(--ease),box-shadow var(--ease);
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    border-color:var(--ice-dim);
+    box-shadow:0 14px 28px rgba(0,0,0,0.34);
+  }
+  .card:active{transform:translateY(-1px);}
+  .card:focus-visible{outline:2px solid var(--ice);outline-offset:2px;}
+  .card img{
+    max-height:56px;
+    object-fit:contain;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,0.3));
+    transition:transform var(--ease);
+  }
+  .card:hover img{transform:scale(1.06);}
+  .card-label{
+    font-size:10.5px;
+    color:var(--muted);
+    text-align:center;
+    line-height:1.3;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:100%;
+  }
+  .card.playing{
+    border-color:var(--ice);
+    box-shadow:0 0 0 1px var(--ice),0 14px 28px rgba(111,216,232,0.18);
+  }
+  .card.playing::before{
+    content:"● EN VIVO";
+    position:absolute;top:7px;right:7px;
+    font-family:var(--font-mono);
+    font-size:7.5px;letter-spacing:0.5px;
+    color:var(--beacon);
+    background:rgba(6,11,19,0.7);
+    padding:2px 6px;border-radius:999px;
+  }
+  .card.hidden{display:none;}
 
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
-      }
-    }
+  .empty-state{
+    display:none;
+    padding:34px 18px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13.5px;
+    border:1px dashed var(--panel-line);
+    border-radius:var(--radius-lg);
+  }
+  .empty-state.active{display:block;}
 
-    /* Tarjetas / botones */
-    .grid a {
-      position: relative;
-      overflow: hidden;
-      min-height: 92px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-        var(--card);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-      text-decoration: none;
-      cursor: pointer;
-      transition:
-        transform var(--transition),
-        background var(--transition),
-        box-shadow var(--transition),
-        border-color var(--transition);
-      isolation: isolate;
-    }
+  section{margin-bottom:38px;}
 
-    .grid a::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(14,165,249,0.18), transparent 60%);
-      opacity: 0;
-      transition: opacity var(--transition);
-      z-index: 0;
-    }
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed;left:50%;bottom:22px;
+    transform:translate(-50%,20px);
+    z-index:100;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    color:var(--text);
+    font-size:13px;
+    padding:12px 18px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity var(--ease),transform var(--ease);
+    max-width:88vw;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
 
-    .grid a::after {
-      content: "";
-      position: absolute;
-      top: -120%;
-      left: -40%;
-      width: 70%;
-      height: 300%;
-      transform: rotate(25deg);
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.18),
-        transparent
-      );
-      transition: transform 0.8s ease;
-      z-index: 1;
-      pointer-events: none;
-    }
+  /* ---------- Donación ---------- */
+  .donation-wrap{display:flex;justify-content:center;margin:6px 0 4px;}
+  .donation-btn{
+    display:inline-flex;align-items:center;gap:10px;
+    text-decoration:none;color:var(--void);
+    font-size:15.5px;font-weight:700;
+    padding:15px 26px;border-radius:999px;
+    background:linear-gradient(135deg,var(--ice),var(--ice-dim));
+    box-shadow:0 10px 26px rgba(111,216,232,0.25);
+    transition:transform var(--ease),box-shadow var(--ease);
+  }
+  .donation-btn:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(111,216,232,0.35);}
 
-    .grid a:hover {
-      transform: translateY(-6px) scale(1.03);
-      background: var(--card-hover);
-      border-color: rgba(56,189,248,0.5);
-      box-shadow: var(--shadow-hover);
-    }
+  /* ---------- Footer ---------- */
+  footer{
+    margin-top:36px;
+    padding-top:28px;
+    border-top:1px solid var(--panel-line);
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:26px;
+  }
+  @media (max-width:720px){
+    footer{grid-template-columns:1fr;}
+  }
+  footer h3{
+    font-family:var(--font-display);
+    font-size:14.5px;
+    margin:0 0 10px;
+    color:var(--text);
+  }
+  footer p, footer a.footer-link{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.7;
+    margin:0 0 8px;
+    text-decoration:none;
+    display:block;
+  }
+  footer a.footer-link:hover{color:var(--ice);}
+  .footer-bottom{
+    grid-column:1/-1;
+    margin-top:8px;
+    padding-top:16px;
+    border-top:1px solid var(--panel-line);
+    font-size:12px;
+    color:var(--muted-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
 
-    .grid a:hover::before {
-      opacity: 1;
-    }
+  /* ---------- Botón volver arriba ---------- */
+  .to-top{
+    position:fixed;right:18px;bottom:22px;z-index:60;
+    width:42px;height:42px;border-radius:50%;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    color:var(--ice);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    box-shadow:var(--shadow-soft);
+    opacity:0;pointer-events:none;
+    transform:translateY(10px);
+    transition:opacity var(--ease),transform var(--ease);
+  }
+  .to-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
 
-    .grid a:hover::after {
-      transform: translateX(240%) rotate(25deg);
-    }
+  .fade-up{animation:fadeUp 0.6s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+</style>
 
-    .grid a:active {
-      transform: translateY(-2px) scale(0.98);
-    }
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),
+    dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;
+    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TF83X77T');
+</script>
+<!-- End Google Tag Manager -->
 
-    .grid a:focus-visible {
-      outline: 3px solid rgba(56,189,248,0.75);
-      outline-offset: 3px;
-    }
-
-    .grid img {
-      position: relative;
-      z-index: 2;
-      max-height: 72px;
-      object-fit: contain;
-      filter: drop-shadow(0 3px 10px rgba(0,0,0,0.22));
-      transition: transform var(--transition), filter var(--transition);
-    }
-
-    .grid a:hover img {
-      transform: scale(1.06);
-      filter: drop-shadow(0 5px 14px rgba(0,0,0,0.32));
-    }
-
-    /* Donación */
-    .donation-wrap {
-      margin-top: 28px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .donation-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      padding: 16px 24px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
-      box-shadow: 0 10px 24px rgba(14,165,249,0.28);
-      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
-      border: 1px solid rgba(255,255,255,0.14);
-    }
-
-    .donation-btn:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 16px 34px rgba(14,165,249,0.4);
-      filter: brightness(1.05);
-    }
-
-    .donation-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 30px;
-      padding: 22px 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-    }
-
-    .footer-strong {
-      color: #e2e8f0;
-      font-weight: 700;
-    }
-
-    /* Animación de aparición */
-    .fade-up {
-      animation: fadeUp 0.8s ease both;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive fino */
-    @media (max-width: 640px) {
-      .container {
-        padding: 14px 10px 28px;
-      }
-
-      .section-title {
-        font-size: 20px;
-      }
-
-      .section-subtitle {
-        font-size: 13px;
-      }
-
-      .grid a {
-        min-height: 86px;
-        border-radius: 16px;
-      }
-
-      .donation-btn {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-        font-size: 16px;
-      }
-    }
-  </style>
-
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){
-      w[l]=w[l]||[];
-      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),
-      dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TF83X77T');
-  </script>
-  <!-- End Google Tag Manager -->
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EG2E0VLV82"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-EG2E0VLV82');
-  </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EG2E0VLV82"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-EG2E0VLV82');
+</script>
 </head>
 <body>
 
-  <!-- Google Tag Manager (noscript) -->
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TF83X77T"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
-  <!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TF83X77T"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-  <div class="container fade-up">
-
-    <!-- Portada -->
-    <div class="portada">
-      <img src="MENU/PORTADA.png" alt="Portada TV Regional Magallanes">
+<!-- Barra superior -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#04121a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12h20"/><path d="M2 12a10 4 0 0 0 20 0"/><path d="M12 2v10"/>
+        </svg>
+      </span>
+      <span class="brand-text">TV Regional Magallanes<small>Guía de señales australes</small></span>
+    </a>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="buscador" type="text" placeholder="Buscar un canal o radio…" autocomplete="off">
     </div>
+    <div class="clock" id="reloj">Punta Arenas <span id="reloj-hora">--:--</span></div>
+  </div>
+</div>
 
-    <!-- Reproductor -->
+<div class="container fade-up" id="top">
+
+  <!-- Portada -->
+  <div class="hero">
+    <img src="MENU/PORTADA.png" alt="Portada TV Regional Magallanes">
+    <div class="hero-caption">
+      <p class="hero-eyebrow">Transmisión en directo</p>
+      <h1>Toda la señal del extremo austral, en un solo lugar</h1>
+      <p>Canales y radios de Magallanes y de Chile, listos para ver o escuchar al instante.</p>
+    </div>
+  </div>
+
+  <!-- Reproductor -->
+  <div class="player-panel">
     <div class="player-container">
+      <div class="player-loading" id="player-loading"><div class="spinner"></div></div>
       <video id="player" controls muted autoplay loop playsinline>
         <source src="MENU/Trailer2.webm" type="video/webm">
       </video>
     </div>
-
-    <!-- Canales -->
-    <div class="section-img">
-      <div class="section-header">
-        <div class="section-title">Canales</div>
-        <div class="section-subtitle">Regionales y Nacionales</div>
+    <div class="player-status">
+      <div class="player-status-left">
+        <img id="status-logo" src="LOGOS/ICON.png" alt="">
+        <div class="player-status-text">
+          <div class="player-status-label">Reproduciendo ahora</div>
+          <div class="player-status-name" id="status-name">Video de presentación</div>
+        </div>
       </div>
-    </div>
-
-    <div class="grid">
-      <a href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Noticias.html"><img src="LOGOS/9.png" alt="9 Noticias"></a>
-      <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/bbtv/bbtv.smil/playlist.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/421_Bio_Bio_TV.png" alt="Bio Bio TV"></a>
-      <a onclick="abrirReproductor('https://v2.tustreaming.cl/fmarcoirirs/tracks-v1a1/playlist.m3u8?PlaylistM3UCL')"><img src="LOGOS/CANALSURPATAGONIA.png" alt="Canal Sur Patagonia"></a>
-      <a onclick="abrirReproductor('https://m3u.cl/channel/c13.php?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/457_Canal_13.png" alt="Canal 13"></a>
-      <a onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/6491ced935a5833c47dd7f41.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/1153_CHV.png" alt="CHV"></a>
-      <a onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/6531749eaf244059b3ade17b.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/1569_CHV_Deportes.png" alt="CHV Deportes"></a>
-      <a onclick="abrirReproductor('https://paneltv.online:1936/8046/8046/playlist.m3u8?WebM3UCL')"><img src="LOGOS/CLASSICCHANNEL.png" alt="Classic Channel"></a>
-      <a onclick="abrirReproductor('https://paneltv.stream:2020/VideoPlayer/ctv35?')"><img src="LOGOS/CTV35.png" alt="CTV35"></a>
-      <a onclick="abrirReproductor('https://panel.tvstream.cl:1936/matxnmjryy/matxnmjryy/playlist.m3u8')"><img src="LOGOS/RADIONAVARINO.png" alt="Radio Navarino"></a>
-      <a onclick="abrirReproductor('https://vdochile.com:3922/live/egm20live.m3u8')"><img src="LOGOS/EGMChannel.png" alt="EGM Channel"></a>
-      <a onclick="abrirReproductor('https://stmv2.voxtvhd.com.br/evavision/evavision/playlist.m3u8')"><img src="LOGOS/EVAVISION.png" alt="Eva Vision"></a>
-      <a onclick="abrirReproductor('https://premium.tvcontrolcp.com:1936/evaretro/evaretro/playlist.m3u8')"><img src="LOGOS/EVAVISIONRETRO.png" alt="Eva Vision Retro"></a>
-      <a onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/itv/itv.smil/playlist.m3u8?PlaylistM3UCL')"><img src="LOGOS/ITV.png" alt="ITV"></a>
-      <a onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/5653641561b4eba30a7e4929.m3u8?PlaylistM3UCL')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/TVN_3_2023.svg/1920px-TVN_3_2023.svg.png" alt="TVN3"></a>
-      <a onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/mega/mega.smil/playlist.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/455_Mega.png" alt="Mega"></a>
-      <a onclick="abrirReproductor('https://video3.servidordevideo.net:3585/live/upbsfzhdlive.m3u8')"><img src="LOGOS/MILODONTV.png" alt="Milodon TV"></a>
-      <a onclick="abrirReproductor('https://vdochile.com:3131/live/redupxprlive.m3u8')"><img src="LOGOS/MUSICPUQ.png" alt="Music PUQ"></a>
-      <a onclick="abrirReproductor('https://videohd.live:19360/8100/8100.m3u8')"><img src="LOGOS/PATAGONIATV.png" alt="Patagonia TV"></a>
-      <a onclick="abrirReproductor('https://stmv5.voxtvhd.com.br/opinionsur/opinionsur/playlist.m3u8?PlaylistM3UCL')"><img src="LOGOS/OPINIONSURTV.png" alt="Opinion Sur TV"></a>
-      <a onclick="abrirReproductor('https://vdochile.com:3222/live/ngchalive.m3u8')"><img src="LOGOS/NGCHANNEL.png" alt="NG Channel"></a> 
-      <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8')"><img src="LOGOS/PINGUINOMULTIMEDIA.png" alt="Pinguino Multimedia"></a>
-      <a onclick="abrirReproductor('https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8')"><img src="LOGOS/POLARCOMUNICACIONES.png" alt="Polar Comunicaciones"></a>
-      <a onclick="abrirReproductor('https://ibanez.servercl.com/hls/live.m3u8')"><img src="LOGOS/RADIOIBAÑEZ.png" alt="Radio Ibañez"></a>
-      <a onclick="abrirReproductor('https://live20.bozztv.com/akamaissh101/ssh101/radiomagallanes/playlist.m3u8')"><img src="LOGOS/RADIOMAGALLANES.png" alt="Radio Magallanes"></a>
-      <a onclick="abrirReproductor('https://stmv5.voxtvhd.com.br/redfueguina/redfueguina/playlist.m3u8')"><img src="LOGOS/redfueguinamedios.png" alt="Red Fueguina Medios"></a>
-      <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/surtv/surtv.smil/playlist.m3u8?did=')"><img src="LOGOS/SURTV.png" alt="SUR TV"></a>
-      <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/10b92cafdf3646cbc1e727f3dc76863621a327fd/t13/t13.smil/playlist.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/1054_T13.png" alt="T13"></a>
-      <a onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/t13radio/t13radio.smil/playlist.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/1198_T13_Radio.png" alt="T13 Radio"></a>
-      <a onclick="abrirReproductor('https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/tvmas/tvmas.smil/playlist.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/458_TV_.png" alt="TV+"></a>
-      <a onclick="abrirReproductor('https://tls-cl.cdnz.cl/umag1/ngrp:live_all/playlist.m3u8')"><img src="LOGOS/UMAGTV1.png" alt="UMAG TV 1"></a>
-      <a onclick="abrirReproductor('https://tls-cl.cdnz.cl/umag2/live/playlist.m3u8')"><img src="LOGOS/UMAGTV2.png" alt="UMAG TV 2"></a>
-      <a onclick="abrirReproductor('https://unlimited2-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8?PlaylistM3UCL')"><img src="https://cdn.m3u.cl/logo/54_UCV.png" alt="UCV"></a>
-      <a href="https://www.instagram.com/tvregionalmagallanes/?hl=es" target="_blank" rel="noopener noreferrer"><img src="LOGOS/RRSSTV.png" alt="Instagram TV Regional Magallanes"></a>
-    </div>
-
-    <!-- Radios -->
-    <div class="section-img">
-      <div class="section-header">
-        <div class="section-title">Radios</div>
-        <div class="section-subtitle">Regionales y Nacionales</div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <a onclick="abrirReproductor('https://app0103.sonicpanelradio.com/8222/stream')"><img src="LOGOS/RadioSur.png" alt="Radio Sur"></a>
-      <a onclick="abrirReproductor('https://179.9.164.55:1935/radio')"><img src="LOGOS/FARAONICANATALES.png" alt="Faraonica Natales"></a>
-      <a onclick="abrirReproductor('https://sonic.nnw.cl/8028/stream')"><img src="LOGOS/MERIDIONAL.png" alt="Meridional"></a>
-      <a onclick="abrirReproductor('https://sonicpanel.globalstream.pro/8170/stream')"><img src="LOGOS/PATAGONIAAUSTRAL.png" alt="Patagonia Austral"></a>
-      <a onclick="abrirReproductor('https://sonicpanel.globalstream.pro/8032/stream')"><img src="LOGOS/CamelotFM.png" alt="Camelot FM"></a>
-      <a onclick="abrirReproductor('https://cdn.instream.audio/stream/stylojor')"><img src="LOGOS/STYLOFM.png" alt="Stylo FM"></a>
-      <a href="https://www.instagram.com/tvregionalmagallanes/?hl=es" target="_blank" rel="noopener noreferrer"><img src="LOGOS/RRSSTV.png" alt="Instagram TV Regional Magallanes"></a>
-      <a onclick="abrirReproductor('https://streaming01.shockmedia.com.ar:10791')"><img src="LOGOS/NuevoDiaFMpng.png" alt="Nuevo Dia FM"></a>
-      <a onclick="abrirReproductor('https://sonic.streamingchilenos.com/9634/;')"><img src="LOGOS/GENERACIONRETRO.png" alt="Generacion Retro"></a>
-      <a onclick="abrirReproductor('https://sonicpanel.globalstream.pro/8246/stream')"><img src="LOGOS/NATALISSIMA.png" alt="Natalissima"></a>
-      <a onclick="abrirReproductor('https://stream.cooperativa.cl/cooperativa_link.mp3')"><img src="https://cdn.instant.audio/images/logos/emisora-cl/cooperativa.png" alt="Cooperativa"></a>
-      <a onclick="abrirReproductor('https://sonando-us.digitalproserver.com/carnaval_antofagasta.aac')"><img src="https://cdn.instant.audio/images/logos/emisora-cl/carnaval-vina.png" alt="Carnaval"></a>
-      <a onclick="abrirReproductor('https://panelradio.online/proxy/myradio1/aac')"><img src="https://myradio.cl/templates/yootheme/cache/88/logo-200px-889c1292.webp" alt="My Radio"></a>
-      <a onclick="abrirReproductor('https://sonic.portalfoxmix.club/8130/stream')"><img src="LOGOS/RADIONAVARINO.png" alt="Radio Navarino"></a>
-      <a onclick="abrirReproductor('https://panelradio.online/proxy/sinfoniatropical/aac')"><img src="https://sinfoniatropical.cl/templates/yootheme/cache/91/logo-150-918ef28d.webp" alt="Sinfonia Tropical"></a>
-      <a onclick="abrirReproductor('https://sonicpanel.cc:8064/stream')"><img src="LOGOS/RADIOHITS.png" alt="Radio Hits"></a>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-      <span class="footer-strong">Por Catalina</span> · Todos los derechos reservados.<br>
-      Para agregar tu canal o radio, contáctame por WhatsApp al <span class="footer-strong">+56 9 9446 1830</span>.<br>
-      También informo que el código fuente y la aplicación están en venta. Consultas directamente por WhatsApp.
-    </footer>
-
-    <!-- Donación -->
-    <div class="donation-wrap">
-      <a class="donation-btn" href="https://link.mercadopago.cl/tvregionalmagallanes" target="_blank" rel="noopener noreferrer">
-        ❤️ Donaciones · Ayúdanos a crecer
-      </a>
+      <button class="player-fs" id="btn-fs" type="button">Pantalla completa</button>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    const video = document.getElementById('player');
-    let hls;
+  <div class="horizon"></div>
 
-    try {
-      video.autoplay = true;
-      video.play().catch(() => {});
-    } catch (e) {}
+  <!-- Canales -->
+  <section id="canales">
+    <div class="section-head">
+      <div>
+        <h2>Canales</h2>
+        <p>Televisión regional y nacional, en vivo</p>
+      </div>
+      <span class="section-count" id="count-canales"></span>
+    </div>
 
-    function abrirReproductor(url) {
-      video.muted = false;
-      video.loop = false;
+    <div class="grid" id="grid-canales">
+      <a class="card" data-name="9 Noticias" href="https://c4pit4nvodk4.github.io/TvRegionalMagallanes/9Noticias.html"><img src="LOGOS/9.png" alt="9 Noticias"><span class="card-label">9 Noticias</span></a>
+      <a class="card" data-name="Bio Bio TV" onclick="abrirReproductor('https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/bbtv/bbtv.smil/playlist.m3u8?PlaylistM3UCL','Bio Bio TV',this)"><img src="https://cdn.m3u.cl/logo/421_Bio_Bio_TV.png" alt="Bio Bio TV"><span class="card-label">Bio Bio TV</span></a>
+      <a class="card" data-name="Canal Sur Patagonia" onclick="abrirReproductor('https://v2.tustreaming.cl/fmarcoirirs/tracks-v1a1/playlist.m3u8?PlaylistM3UCL','Canal Sur Patagonia',this)"><img src="LOGOS/CANALSURPATAGONIA.png" alt="Canal Sur Patagonia"><span class="card-label">Canal Sur Patagonia</span></a>
+      <a class="card" data-name="Canal 13" onclick="abrirReproductor('https://m3u.cl/channel/c13.php?PlaylistM3UCL','Canal 13',this)"><img src="https://cdn.m3u.cl/logo/457_Canal_13.png" alt="Canal 13"><span class="card-label">Canal 13</span></a>
+      <a class="card" data-name="CHV" onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/6491ced935a5833c47dd7f41.m3u8?PlaylistM3UCL','CHV',this)"><img src="https://cdn.m3u.cl/logo/1153_CHV.png" alt="CHV"><span class="card-label">CHV</span></a>
+      <a class="card" data-name="CHV Deportes" onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/6531749eaf244059b3ade17b.m3u8?PlaylistM3UCL','CHV Deportes',this)"><img src="https://cdn.m3u.cl/logo/1569_CHV_Deportes.png" alt="CHV Deportes"><span class="card-label">CHV Deportes</span></a>
+      <a class="card" data-name="Classic Channel" onclick="abrirReproductor('https://paneltv.online:1936/8046/8046/playlist.m3u8?WebM3UCL','Classic Channel',this)"><img src="LOGOS/CLASSICCHANNEL.png" alt="Classic Channel"><span class="card-label">Classic Channel</span></a>
+      <a class="card" data-name="CTV35" onclick="abrirReproductor('https://paneltv.stream:2020/VideoPlayer/ctv35?autoplay=1','CTV35',this)"><img src="LOGOS/CTV35.png" alt="CTV35"><span class="card-label">CTV35</span></a>
+      <a class="card" data-name="Radio Navarino TV" onclick="abrirReproductor('https://panel.tvstream.cl:1936/matxnmjryy/matxnmjryy/playlist.m3u8','Radio Navarino',this)"><img src="LOGOS/RADIONAVARINO.png" alt="Radio Navarino"><span class="card-label">Radio Navarino</span></a>
+      <a class="card" data-name="EGM Channel" onclick="abrirReproductor('https://vdochile.com:3922/live/egm20live.m3u8','EGM Channel',this)"><img src="LOGOS/EGMChannel.png" alt="EGM Channel"><span class="card-label">EGM Channel</span></a>
+      <a class="card" data-name="Eva Vision" onclick="abrirReproductor('https://stmv2.voxtvhd.com.br/evavision/evavision/playlist.m3u8','Eva Vision',this)"><img src="LOGOS/EVAVISION.png" alt="Eva Vision"><span class="card-label">Eva Vision</span></a>
+      <a class="card" data-name="Eva Vision Retro" onclick="abrirReproductor('https://premium.tvcontrolcp.com:1936/evaretro/evaretro/playlist.m3u8','Eva Vision Retro',this)"><img src="LOGOS/EVAVISIONRETRO.png" alt="Eva Vision Retro"><span class="card-label">Eva Vision Retro</span></a>
+      <a class="card" data-name="ITV" onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/itv/itv.smil/playlist.m3u8?PlaylistM3UCL','ITV',this)"><img src="LOGOS/ITV.png" alt="ITV"><span class="card-label">ITV</span></a>
+      <a class="card" data-name="TVN" onclick="abrirReproductor('https://mdstrm.com/live-stream-playlist/5653641561b4eba30a7e4929.m3u8?PlaylistM3UCL','TVN',this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/TVN_3_2023.svg/1920px-TVN_3_2023.svg.png" alt="TVN"><span class="card-label">TVN</span></a>
+      <a class="card" data-name="Mega" onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/mega/mega.smil/playlist.m3u8?PlaylistM3UCL','Mega',this)"><img src="https://cdn.m3u.cl/logo/455_Mega.png" alt="Mega"><span class="card-label">Mega</span></a>
+      <a class="card" data-name="Milodon TV" onclick="abrirReproductor('https://video3.servidordevideo.net:3585/live/upbsfzhdlive.m3u8','Milodon TV',this)"><img src="LOGOS/MILODONTV.png" alt="Milodon TV"><span class="card-label">Milodon TV</span></a>
+      <a class="card" data-name="Music PUQ" onclick="abrirReproductor('https://vdochile.com:3131/live/redupxprlive.m3u8','Music PUQ',this)"><img src="LOGOS/MUSICPUQ.png" alt="Music PUQ"><span class="card-label">Music PUQ</span></a>
+      <a class="card" data-name="Patagonia TV" onclick="abrirReproductor('https://videohd.live:19360/8100/8100.m3u8','Patagonia TV',this)"><img src="LOGOS/PATAGONIATV.png" alt="Patagonia TV"><span class="card-label">Patagonia TV</span></a>
+      <a class="card" data-name="Opinion Sur TV" onclick="abrirReproductor('https://stmv5.voxtvhd.com.br/opinionsur/opinionsur/playlist.m3u8?PlaylistM3UCL','Opinion Sur TV',this)"><img src="LOGOS/OPINIONSURTV.png" alt="Opinion Sur TV"><span class="card-label">Opinion Sur TV</span></a>
+      <a class="card" data-name="NG Channel" onclick="abrirReproductor('https://vdochile.com:3222/live/ngchalive.m3u8','NG Channel',this)"><img src="LOGOS/NGCHANNEL.png" alt="NG Channel"><span class="card-label">NG Channel</span></a>
+      <a class="card" data-name="Pinguino Multimedia" onclick="abrirReproductor('https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8','Pinguino Multimedia',this)"><img src="LOGOS/PINGUINOMULTIMEDIA.png" alt="Pinguino Multimedia"><span class="card-label">Pinguino Multimedia</span></a>
+      <a class="card" data-name="Polar Comunicaciones" onclick="abrirReproductor('https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8','Polar Comunicaciones',this)"><img src="LOGOS/POLARCOMUNICACIONES.png" alt="Polar Comunicaciones"><span class="card-label">Polar Comunicaciones</span></a>
+      <a class="card" data-name="Radio Ibañez" onclick="abrirReproductor('https://ibanez.servercl.com/hls/live.m3u8','Radio Ibañez',this)"><img src="LOGOS/RADIOIBAÑEZ.png" alt="Radio Ibañez"><span class="card-label">Radio Ibañez</span></a>
+      <a class="card" data-name="Radio Magallanes TV" onclick="abrirReproductor('https://live20.bozztv.com/akamaissh101/ssh101/radiomagallanes/playlist.m3u8','Radio Magallanes',this)"><img src="LOGOS/RADIOMAGALLANES.png" alt="Radio Magallanes"><span class="card-label">Radio Magallanes</span></a>
+      <a class="card" data-name="Red Fueguina Medios" onclick="abrirReproductor('https://stmv5.voxtvhd.com.br/redfueguina/redfueguina/playlist.m3u8','Red Fueguina Medios',this)"><img src="LOGOS/redfueguinamedios.png" alt="Red Fueguina Medios"><span class="card-label">Red Fueguina</span></a>
+      <a class="card" data-name="SUR TV" onclick="abrirReproductor('https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/surtv/surtv.smil/playlist.m3u8?did=','SUR TV',this)"><img src="LOGOS/SURTV.png" alt="SUR TV"><span class="card-label">SUR TV</span></a>
+      <a class="card" data-name="T13" onclick="abrirReproductor('https://redirector.rudo.video/hls-video/10b92cafdf3646cbc1e727f3dc76863621a327fd/t13/t13.smil/playlist.m3u8?PlaylistM3UCL','T13',this)"><img src="https://cdn.m3u.cl/logo/1054_T13.png" alt="T13"><span class="card-label">T13</span></a>
+      <a class="card" data-name="T13 Radio" onclick="abrirReproductor('https://unlimited1-cl-isp.dps.live/t13radio/t13radio.smil/playlist.m3u8?PlaylistM3UCL','T13 Radio',this)"><img src="https://cdn.m3u.cl/logo/1198_T13_Radio.png" alt="T13 Radio"><span class="card-label">T13 Radio</span></a>
+      <a class="card" data-name="TV+" onclick="abrirReproductor('https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/tvmas/tvmas.smil/playlist.m3u8?PlaylistM3UCL','TV+',this)"><img src="https://cdn.m3u.cl/logo/458_TV_.png" alt="TV+"><span class="card-label">TV+</span></a>
+      <a class="card" data-name="UMAG TV 1" onclick="abrirReproductor('https://tls-cl.cdnz.cl/umag1/ngrp:live_all/playlist.m3u8','UMAG TV 1',this)"><img src="LOGOS/UMAGTV1.png" alt="UMAG TV 1"><span class="card-label">UMAG TV 1</span></a>
+      <a class="card" data-name="UMAG TV 2" onclick="abrirReproductor('https://tls-cl.cdnz.cl/umag2/live/playlist.m3u8','UMAG TV 2',this)"><img src="LOGOS/UMAGTV2.png" alt="UMAG TV 2"><span class="card-label">UMAG TV 2</span></a>
+      <a class="card" data-name="UCV" onclick="abrirReproductor('https://unlimited2-cl-isp.dps.live/ucvtv2/ucvtv2.smil/playlist.m3u8?PlaylistM3UCL','UCV',this)"><img src="https://cdn.m3u.cl/logo/54_UCV.png" alt="UCV"><span class="card-label">UCV</span></a>
+      <a class="card" data-name="Instagram" href="https://www.instagram.com/tvregionalmagallanes/?hl=es" target="_blank" rel="noopener noreferrer"><img src="LOGOS/RRSSTV.png" alt="Instagram TV Regional Magallanes"><span class="card-label">Instagram</span></a>
+    </div>
+    <div class="empty-state" id="empty-canales">No encontramos ningún canal con ese nombre.</div>
+  </section>
 
-      if (Hls.isSupported() && url.includes('.m3u8')) {
-        if (hls) hls.destroy();
+  <!-- Radios -->
+  <section id="radios">
+    <div class="section-head">
+      <div>
+        <h2>Radios</h2>
+        <p>Emisoras regionales y nacionales, en vivo</p>
+      </div>
+      <span class="section-count" id="count-radios"></span>
+    </div>
 
-        hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
+    <div class="grid" id="grid-radios">
+      <a class="card" data-name="Radio Sur" onclick="abrirReproductor('https://app0103.sonicpanelradio.com/8222/stream','Radio Sur',this)"><img src="LOGOS/RadioSur.png" alt="Radio Sur"><span class="card-label">Radio Sur</span></a>
+      <a class="card" data-name="Faraonica Natales" onclick="abrirReproductor('https://179.9.164.55:1935/radio','Faraonica Natales',this)"><img src="LOGOS/FARAONICANATALES.png" alt="Faraonica Natales"><span class="card-label">Faraonica Natales</span></a>
+      <a class="card" data-name="Meridional" onclick="abrirReproductor('https://sonic.nnw.cl/8028/stream','Meridional',this)"><img src="LOGOS/MERIDIONAL.png" alt="Meridional"><span class="card-label">Meridional</span></a>
+      <a class="card" data-name="Patagonia Austral" onclick="abrirReproductor('https://sonicpanel.globalstream.pro/8170/stream','Patagonia Austral',this)"><img src="LOGOS/PATAGONIAAUSTRAL.png" alt="Patagonia Austral"><span class="card-label">Patagonia Austral</span></a>
+      <a class="card" data-name="Camelot FM" onclick="abrirReproductor('https://sonicpanel.globalstream.pro/8032/stream','Camelot FM',this)"><img src="LOGOS/CamelotFM.png" alt="Camelot FM"><span class="card-label">Camelot FM</span></a>
+      <a class="card" data-name="Stylo FM" onclick="abrirReproductor('https://cdn.instream.audio/stream/stylojor','Stylo FM',this)"><img src="LOGOS/STYLOFM.png" alt="Stylo FM"><span class="card-label">Stylo FM</span></a>
+      <a class="card" data-name="Instagram" href="https://www.instagram.com/tvregionalmagallanes/?hl=es" target="_blank" rel="noopener noreferrer"><img src="LOGOS/RRSSTV.png" alt="Instagram TV Regional Magallanes"><span class="card-label">Instagram</span></a>
+      <a class="card" data-name="Nuevo Dia FM" onclick="abrirReproductor('https://streaming01.shockmedia.com.ar:10791','Nuevo Dia FM',this)"><img src="LOGOS/NuevoDiaFMpng.png" alt="Nuevo Dia FM"><span class="card-label">Nuevo Dia FM</span></a>
+      <a class="card" data-name="Generacion Retro" onclick="abrirReproductor('https://sonic.streamingchilenos.com/9634/;','Generacion Retro',this)"><img src="LOGOS/GENERACIONRETRO.png" alt="Generacion Retro"><span class="card-label">Generacion Retro</span></a>
+      <a class="card" data-name="Natalissima" onclick="abrirReproductor('https://sonicpanel.globalstream.pro/8246/stream','Natalissima',this)"><img src="LOGOS/NATALISSIMA.png" alt="Natalissima"><span class="card-label">Natalissima</span></a>
+      <a class="card" data-name="Cooperativa" onclick="abrirReproductor('https://stream.cooperativa.cl/cooperativa_link.mp3','Cooperativa',this)"><img src="https://cdn.instant.audio/images/logos/emisora-cl/cooperativa.png" alt="Cooperativa"><span class="card-label">Cooperativa</span></a>
+      <a class="card" data-name="Carnaval" onclick="abrirReproductor('https://sonando-us.digitalproserver.com/carnaval_antofagasta.aac','Carnaval',this)"><img src="https://cdn.instant.audio/images/logos/emisora-cl/carnaval-vina.png" alt="Carnaval"><span class="card-label">Carnaval</span></a>
+      <a class="card" data-name="My Radio" onclick="abrirReproductor('https://panelradio.online/proxy/myradio1/aac','My Radio',this)"><img src="https://myradio.cl/templates/yootheme/cache/88/logo-200px-889c1292.webp" alt="My Radio"><span class="card-label">My Radio</span></a>
+      <a class="card" data-name="Radio Navarino" onclick="abrirReproductor('https://sonic.portalfoxmix.club/8130/stream','Radio Navarino',this)"><img src="LOGOS/RADIONAVARINO.png" alt="Radio Navarino"><span class="card-label">Radio Navarino</span></a>
+      <a class="card" data-name="Sinfonia Tropical" onclick="abrirReproductor('https://panelradio.online/proxy/sinfoniatropical/aac','Sinfonia Tropical',this)"><img src="https://sinfoniatropical.cl/templates/yootheme/cache/91/logo-150-918ef28d.webp" alt="Sinfonia Tropical"><span class="card-label">Sinfonia Tropical</span></a>
+      <a class="card" data-name="Radio Hits" onclick="abrirReproductor('https://sonicpanel.cc:8064/stream','Radio Hits',this)"><img src="LOGOS/RADIOHITS.png" alt="Radio Hits"><span class="card-label">Radio Hits</span></a>
+    </div>
+    <div class="empty-state" id="empty-radios">No encontramos ninguna radio con ese nombre.</div>
+  </section>
 
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          video.play();
-          video.requestFullscreen?.();
-        });
-      } else {
-        if (hls) {
-          hls.destroy();
-          hls = null;
-        }
+  <!-- Donación -->
+  <div class="donation-wrap">
+    <a class="donation-btn" href="https://link.mercadopago.cl/tvregionalmagallanes" target="_blank" rel="noopener noreferrer">
+      ❤️ Ayúdanos a mantener la señal en el aire
+    </a>
+  </div>
 
-        video.src = url;
-        video.play();
-        video.requestFullscreen?.();
-      }
+  <!-- Footer -->
+  <footer>
+    <div>
+      <h3>TV Regional Magallanes</h3>
+      <p>Una guía independiente de canales y radios en vivo de la Región de Magallanes y de Chile, pensada para que encuentres tu señal en segundos.</p>
+    </div>
+    <div>
+      <h3>Colabora</h3>
+      <a class="footer-link" href="https://wa.me/56994461830" target="_blank" rel="noopener noreferrer">Agregar tu canal o radio · WhatsApp</a>
+      <a class="footer-link" href="https://link.mercadopago.cl/tvregionalmagallanes" target="_blank" rel="noopener noreferrer">Hacer una donación</a>
+    </div>
+    <div>
+      <h3>Sobre el sitio</h3>
+      <a class="footer-link" href="https://wa.me/56994461830" target="_blank" rel="noopener noreferrer">El código fuente y la app están en venta</a>
+      <a class="footer-link" href="https://www.instagram.com/tvregionalmagallanes/?hl=es" target="_blank" rel="noopener noreferrer">Síguenos en Instagram</a>
+    </div>
+    <div class="footer-bottom">
+      <span>Por Catalina · Todos los derechos reservados.</span>
+      <span id="anio"></span>
+    </div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+<button class="to-top" id="to-top" aria-label="Volver arriba" type="button">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+  const video = document.getElementById('player');
+  const loading = document.getElementById('player-loading');
+  const statusName = document.getElementById('status-name');
+  const statusLogo = document.getElementById('status-logo');
+  const toast = document.getElementById('toast');
+  let hls;
+  let toastTimer;
+
+  try{ video.play().catch(()=>{}); }catch(e){}
+
+  function mostrarToast(msg){
+    clearTimeout(toastTimer);
+    toast.textContent = msg;
+    toast.classList.add('show');
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 3200);
+  }
+
+  function abrirReproductor(url, nombre, el){
+    video.muted = false;
+    video.loop = false;
+    loading.classList.add('active');
+
+    statusName.textContent = nombre || 'Señal en vivo';
+    const img = el ? el.querySelector('img') : null;
+    if(img) statusLogo.src = img.src;
+
+    document.querySelectorAll('.card.playing').forEach(c=>c.classList.remove('playing'));
+    if(el) el.classList.add('playing');
+
+    const finalizarCarga = ()=> loading.classList.remove('active');
+    const manejarError = ()=>{
+      loading.classList.remove('active');
+      mostrarToast('No se pudo cargar "' + (nombre || 'esta señal') + '". Prueba con otra señal.');
+    };
+
+    if(Hls.isSupported() && url.includes('.m3u8')){
+      if(hls) hls.destroy();
+      hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function(){
+        finalizarCarga();
+        video.play().catch(()=>{});
+      });
+      hls.on(Hls.Events.ERROR, function(_evt, data){
+        if(data && data.fatal) manejarError();
+      });
+    } else {
+      if(hls){ hls.destroy(); hls = null; }
+      video.src = url;
+      video.oncanplay = finalizarCarga;
+      video.onerror = manejarError;
+      video.play().catch(()=>{});
     }
-  </script>
+
+    document.querySelector('.player-panel').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  document.getElementById('btn-fs').addEventListener('click', ()=>{
+    video.requestFullscreen?.();
+  });
+
+  /* Buscador: filtra canales y radios por nombre */
+  const buscador = document.getElementById('buscador');
+  const grupos = [
+    {grid:document.getElementById('grid-canales'), empty:document.getElementById('empty-canales'), count:document.getElementById('count-canales')},
+    {grid:document.getElementById('grid-radios'), empty:document.getElementById('empty-radios'), count:document.getElementById('count-radios')}
+  ];
+
+  function actualizarContadores(){
+    grupos.forEach(g=>{
+      const total = g.grid.querySelectorAll('.card').length;
+      g.count.textContent = total + (total === 1 ? ' señal' : ' señales');
+    });
+  }
+
+  function filtrar(){
+    const q = buscador.value.trim().toLowerCase();
+    grupos.forEach(g=>{
+      let visibles = 0;
+      g.grid.querySelectorAll('.card').forEach(card=>{
+        const nombre = (card.dataset.name || '').toLowerCase();
+        const coincide = nombre.includes(q);
+        card.classList.toggle('hidden', !coincide);
+        if(coincide) visibles++;
+      });
+      g.empty.classList.toggle('active', q !== '' && visibles === 0);
+    });
+  }
+  buscador.addEventListener('input', filtrar);
+  actualizarContadores();
+
+  /* Reloj de Punta Arenas */
+  function actualizarReloj(){
+    const el = document.getElementById('reloj-hora');
+    try{
+      el.textContent = new Intl.DateTimeFormat('es-CL', {
+        hour:'2-digit', minute:'2-digit', timeZone:'America/Punta_Arenas'
+      }).format(new Date());
+    }catch(e){
+      el.textContent = new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
+    }
+  }
+  actualizarReloj();
+  setInterval(actualizarReloj, 30000);
+
+  /* Botón volver arriba */
+  const toTop = document.getElementById('to-top');
+  window.addEventListener('scroll', ()=>{
+    toTop.classList.toggle('show', window.scrollY > 480);
+  });
+  toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+  document.getElementById('anio').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
